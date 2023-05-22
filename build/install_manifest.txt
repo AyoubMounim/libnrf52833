@@ -1,0 +1,10 @@
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/lib/libnrf52833.a
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/include/nrf52833/clock.h
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/include/nrf52833/gpio.h
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/include/nrf52833/macros.h
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/include/nrf52833/nvmc.h
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/include/nrf52833/uarte.h
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/cmake/nrf52833Targets.cmake
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/cmake/nrf52833Targets-noconfig.cmake
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/cmake/nrf52833Config.cmake
+/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install/cmake/nrf52833ConfigVersion.cmake

@@ -39,7 +39,7 @@ void Uarte_disable(Uarte* uarte){
 void Uarte_setTxPin(Uarte* self){
   uint8_t port = self->txPin.port;
   uint8_t pin = self->txPin.pin;
-  UARTE0_PSELTXD = (port << 5 + pin);
+  UARTE0_PSELTXD = ((port << 5) + pin);
   return;
 }
 
@@ -47,7 +47,7 @@ void Uarte_setTxPin(Uarte* self){
 void Uarte_setRxPin(Uarte* self){
   uint8_t port = self->rxPin.port;
   uint8_t pin = self->rxPin.pin;
-  UARTE0_PSELRXD = (port << 5 + pin);
+  UARTE0_PSELRXD = ((port << 5) + pin);
   return;
 }
 
