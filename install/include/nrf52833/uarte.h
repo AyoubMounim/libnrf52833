@@ -70,12 +70,12 @@ void Uarte_disable(Uarte* self);
 void Uarte_setTxPin(Uarte* self);
 void Uarte_setRxPin(Uarte* self);
 
-void Uarte_writeChar(const char* ch);
-void Uarte_writeStr(const char* str);
-void Uarte_writeInt(uint32_t integer, uint8_t base);
+void Uarte_writeChar(Uarte* self, const char* ch);
+void Uarte_writeStr(Uarte* self, const char* str);
+void Uarte_writeInt(Uarte* self, uint32_t integer, uint8_t base);
 
-void Uarte_input(char* input);
-void Uarte_getChar(char* ch);
+void Uarte_input(Uarte* self, char* input);
+void Uarte_getChar(Uarte* self, char* ch);
 void Uarte_listenChar(Uarte* self, char* ch);
 void Uarte_endl(Uarte* self);
 void Uarte_flush(Uarte* self);
