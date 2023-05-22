@@ -50,54 +50,54 @@ Gpio Gpio_create(uint8_t port, uint8_t pin){
 }
 
 
-void Gpio_config_connect(const Gpio* self){
+void Gpio_configConnect(const Gpio* self){
   GPIO_CNF(self->port, self->pin) &= ~(INPUT_DISCONNECT);
   GPIO_CNF(self->port, self->pin) |= INPUT_CONNECT;
   return;
 }
 
 
-void Gpio_config_disconnect(const Gpio* self){
+void Gpio_configDisconnect(const Gpio* self){
   GPIO_CNF(self->port, self->pin) &= ~(INPUT_DISCONNECT);
   GPIO_CNF(self->port, self->pin) |= INPUT_DISCONNECT;
   return;
 }
 
 
-void Gpio_config_output(const Gpio* self){
-  Gpio_config_disconnect(self);
+void Gpio_configOutput(const Gpio* self){
+  Gpio_configDisconnect(self);
   GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
   GPIO_CNF(self->port, self->pin) |= DIR_OUTPUT;
-  Gpio_set_low(self);
-  Gpio_config_connect(self);
+  Gpio_setLow(self);
+  Gpio_configConnect(self);
   return;
 }
 
 
-void Gpio_config_input(const Gpio* self){
-  Gpio_config_disconnect(self);
+void Gpio_configInput(const Gpio* self){
+  Gpio_configDisconnect(self);
   GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
   GPIO_CNF(self->port, self->pin) |= DIR_INPUT;
-  Gpio_set_low(self);
-  Gpio_config_connect(self);
+  Gpio_setLow(self);
+  Gpio_configConnect(self);
   return;
 }
 
 
-void Gpio_set_high(const Gpio* self){
-  Gpio_config_disconnect(self);
-  Gpio_config_output(self);
+void Gpio_setHigh(const Gpio* self){
+  Gpio_configDisconnect(self);
+  Gpio_configOutput(self);
   GPIO_OUT(self->port) |= (1 << self->pin);
-  Gpio_config_connect(self);
+  Gpio_configConnect(self);
   return;
 }
 
 
-void Gpio_set_low(const Gpio* self){
-  Gpio_config_disconnect(self);
-  Gpio_config_output(self);
+void Gpio_setLow(const Gpio* self){
+  Gpio_configDisconnect(self);
+  Gpio_configOutput(self);
   GPIO_OUT(self->port) &= ~(1 << self->pin);
-  Gpio_config_connect(self);
+  Gpio_configConnect(self);
   return;
 }
 

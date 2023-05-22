@@ -23,14 +23,14 @@ struct Gpio {
 Gpio Gpio_create(uint8_t port, uint8_t pin);
 
 /* pin configuration functions */
-void Gpio_config_connect(const Gpio* self);
-void Gpio_config_disconnect(const Gpio* self);
-void Gpio_config_output(const Gpio* self);
-void Gpio_config_input(const Gpio* self);
+void Gpio_configConnect(const Gpio* self);
+void Gpio_configDisconnect(const Gpio* self);
+void Gpio_configOutput(const Gpio* self);
+void Gpio_configInput(const Gpio* self);
 
 /* pin action functions */
-void Gpio_set_high(const Gpio* self);
-void Gpio_set_low(const Gpio* self);
+void Gpio_setHigh(const Gpio* self);
+void Gpio_setLow(const Gpio* self);
 uint8_t Gpio_read(const Gpio* self);
 
 
