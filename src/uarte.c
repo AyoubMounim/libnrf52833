@@ -95,7 +95,7 @@ static void Uarte_block(){
 }
 
 
-void Uarte_writeChar(const char* ch){
+void Uarte_writeChar(Uarte* self, const char* ch){
   Uarte_txReset();
   Uarte_setBuffSize(1);
   Uarte_setTxPtr(ch);
@@ -105,7 +105,7 @@ void Uarte_writeChar(const char* ch){
 }
 
 
-void Uarte_writeStr(const char* str){
+void Uarte_writeStr(Uarte* self, const char* str){
   Uarte_txReset();
   uint32_t buffSize = strLength(str);
   Uarte_setBuffSize(buffSize);
@@ -130,7 +130,7 @@ static uint8_t numberOfDigits(uint32_t integer, uint8_t base){
 }
 
 
-void Uarte_writeInt(uint32_t integer, uint8_t base){
+void Uarte_writeInt(Uarte* self, uint32_t integer, uint8_t base){
   static const char dec[] = "0123456789ABCDEF";
   uint8_t nDigits = numberOfDigits(integer, base);
   char digits[nDigits+1];
@@ -139,22 +139,22 @@ void Uarte_writeInt(uint32_t integer, uint8_t base){
       digits[nDigits] = dec[integer%base];
       integer /= base;
   }
-  Uarte_writeStr(digits);
+  Uarte_writeStr(self, digits);
   return;
 }
 
 
-void Uarte_input(char* input){
+void Uarte_input(Uarte* self, char* input){
   char rxBuff[1];
   int i = 0;
   while (i < MAX_INPUT_LEN){
-    Uarte_getChar(rxBuff);
+    Uarte_getChar(self, rxBuff);
     if (*rxBuff == '\r'){
       input[i] = '\0';
       /* serial_flush(); */
       return;
     }
-    Uarte_writeChar(rxBuff);
+    Uarte_writeChar(self, rxBuff);
     input[i] = rxBuff[0];
     i++;
   }
@@ -191,7 +191,7 @@ static void Uarte_rxStop(){
 }
 
 
-void Uarte_getChar(char* ch){
+void Uarte_getChar(Uarte* self, char* ch){
   Uarte_rxReset();
   Uarte_rxRead(ch);
   Uarte_rxBlock();
@@ -208,7 +208,7 @@ void Uarte_listenChar(Uarte* self, char* ch){
 
 
 void Uarte_endl(Uarte* self){
-  Uarte_writeStr("\n\r");
+  Uarte_writeStr(self, "\n\r");
   return;
 }
 
