@@ -12,5 +12,9 @@
 #define NVMC_ERASEPAGE  REG(uint32_t, NVMC_BASE, 0x508)
 #define NVMC_ICACHECONF REG(uint32_t, NVMC_BASE, 0x540)
 
+#define NVMC_CONFIG_WEN __BIT(0)
+#define NVMC_CONFIG_EEN __BIT(1)
+#define NVMC_ICACHECONF_CACHEEN __BIT(0)
+
 
 #endif

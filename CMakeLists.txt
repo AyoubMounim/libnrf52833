@@ -50,6 +50,8 @@ install(TARGETS ${PROJECT_NAME}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+set(namespace nrf)
+
 install(EXPORT "${PROJECT_NAME}Targets"
     FILE "${PROJECT_NAME}Targets.cmake"
     NAMESPACE ${namespace}::

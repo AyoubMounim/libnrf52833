@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget ::nrf52833)
+foreach(_expectedTarget nrf::nrf52833)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -48,10 +48,10 @@ if(_IMPORT_PREFIX STREQUAL "/")
   set(_IMPORT_PREFIX "")
 endif()
 
-# Create imported target ::nrf52833
-add_library(::nrf52833 STATIC IMPORTED)
+# Create imported target nrf::nrf52833
+add_library(nrf::nrf52833 STATIC IMPORTED)
 
-set_target_properties(::nrf52833 PROPERTIES
+set_target_properties(nrf::nrf52833 PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
 )
 

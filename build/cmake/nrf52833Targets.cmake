@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget ::nrf52833)
+foreach(_expectedTarget nrf::nrf52833)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -41,16 +41,16 @@ unset(_targetsNotDefined)
 unset(_expectedTargets)
 
 
-# Create imported target ::nrf52833
-add_library(::nrf52833 STATIC IMPORTED)
+# Create imported target nrf::nrf52833
+add_library(nrf::nrf52833 STATIC IMPORTED)
 
-set_target_properties(::nrf52833 PROPERTIES
+set_target_properties(nrf::nrf52833 PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833"
 )
 
-# Import target "::nrf52833" for configuration ""
-set_property(TARGET ::nrf52833 APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
-set_target_properties(::nrf52833 PROPERTIES
+# Import target "nrf::nrf52833" for configuration ""
+set_property(TARGET nrf::nrf52833 APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
+set_target_properties(nrf::nrf52833 PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "C"
   IMPORTED_LOCATION_NOCONFIG "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/libnrf52833.a"
   )

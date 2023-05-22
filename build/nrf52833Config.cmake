@@ -24,6 +24,6 @@ endmacro()
 
 ####################################################################################
 
-include("${CMAKE_CURRENT_LIST_DIR}/nrf52833Targets.cmake)
+include("${CMAKE_CURRENT_LIST_DIR}/nrf52833Targets.cmake")
 
 check_required_components(nrf52833)

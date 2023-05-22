@@ -68,6 +68,7 @@ void Gpio_config_output(const Gpio* self){
   Gpio_config_disconnect(self);
   GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
   GPIO_CNF(self->port, self->pin) |= DIR_OUTPUT;
+  Gpio_set_low(self);
   Gpio_config_connect(self);
   return;
 }
@@ -77,6 +78,7 @@ void Gpio_config_input(const Gpio* self){
   Gpio_config_disconnect(self);
   GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
   GPIO_CNF(self->port, self->pin) |= DIR_INPUT;
+  Gpio_set_low(self);
   Gpio_config_connect(self);
   return;
 }
