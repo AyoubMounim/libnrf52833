@@ -43,11 +43,11 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/nrf52833" TYPE FILE FILES
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/clock.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/gpio.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/macros.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nvmc.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/uarte.h"
+    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/clock.h"
+    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/gpio.h"
+    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/macros.h"
+    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/nvmc.h"
+    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/uarte.h"
     )
 endif()
 

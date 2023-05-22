@@ -17,11 +17,13 @@ target_sources(${PROJECT_NAME}
         src/clock.c src/gpio.c src/uarte.c src/utils.c
 )
 
+set(HEADERS_DIR include/nrf52833)
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${HEADERS_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
@@ -36,7 +38,7 @@ set(CMAKE_INSTALL_PREFIX
 )
 
 set(public_headers
-    include/clock.h include/gpio.h include/macros.h include/nvmc.h include/uarte.h
+    ${HEADERS_DIR}/clock.h ${HEADERS_DIR}/gpio.h ${HEADERS_DIR}/macros.h ${HEADERS_DIR}/nvmc.h ${HEADERS_DIR}/uarte.h
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")

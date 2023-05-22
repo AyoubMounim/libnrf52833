@@ -45,7 +45,7 @@ unset(_expectedTargets)
 add_library(::nrf52833 STATIC IMPORTED)
 
 set_target_properties(::nrf52833 PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833"
 )
 
 # Import target "::nrf52833" for configuration ""

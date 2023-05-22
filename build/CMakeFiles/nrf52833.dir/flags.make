@@ -4,7 +4,7 @@
 # compile C with arm-none-eabi-gcc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src -I/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include
+C_INCLUDES = -I/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src -I/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833
 
 C_FLAGS =  -nostartfiles -nostdlib -g -Wall -mcpu=cortex-m4 -mthumb -ffreestanding
 
