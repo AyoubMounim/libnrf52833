@@ -2,6 +2,7 @@
 #ifndef NVMC_H
 #define NVMC_H
 
+#include "macros.h"
 #include <stdint.h>
 
 
