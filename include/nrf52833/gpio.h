@@ -3,35 +3,27 @@
 #define GPIO_H
 
 #include <stdint.h>
-#include "macros.h"
 
 
-#define GPIO_BASE 0x50000000
-
-#define GPIO_CNF(port, pin) REG(uint32_t, GPIO_BASE, (0x300*port + 0x700 + 0x4*pin))
-#define GPIO_IN(port) REG(uint32_t, GPIO_BASE, (0x300*port + 0x510)) 
-#define GPIO_OUT(port) REG(uint32_t, GPIO_BASE, (0x300*port + 0x504)) 
-
-
-typedef struct Gpio Gpio;
-struct Gpio {
-  const uint8_t port;
-  const uint8_t pin;
-};
+typedef struct {
+  uint8_t const port;
+  uint8_t const pin;
+} Gpio;
 
 /* constructors */
-Gpio Gpio_create(uint8_t port, uint8_t pin);
+Gpio gpio_create(uint8_t const port, uint8_t const pin);
 
 /* pin configuration functions */
-void Gpio_configConnect(const Gpio* self);
-void Gpio_configDisconnect(const Gpio* self);
-void Gpio_configOutput(const Gpio* self);
-void Gpio_configInput(const Gpio* self);
+void gpio_configConnect(Gpio const* const self);
+void gpio_configDisconnect(Gpio const* const self);
+void gpio_configOutput(Gpio const* const self);
+void gpio_configInput(Gpio const* const self);
 
 /* pin action functions */
-void Gpio_setHigh(const Gpio* self);
-void Gpio_setLow(const Gpio* self);
-uint8_t Gpio_read(const Gpio* self);
+void gpio_setHigh(Gpio const* const self);
+void gpio_setLow(Gpio const* const self);
+uint8_t gpio_read(Gpio const* const self);
 
 
 #endif
+

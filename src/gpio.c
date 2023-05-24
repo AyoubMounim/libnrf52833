@@ -1,106 +1,115 @@
 
 #include "gpio.h"
+#include "macros.h"
+
+
+#define GPIO_BASE 0x50000000
+
+#define GPIO_CNF(port, pin) REG(uint32_t, GPIO_BASE, (0x300*port + 0x700 + 0x4*pin))
+#define GPIO_IN(port) REG(uint32_t, GPIO_BASE, (0x300*port + 0x510)) 
+#define GPIO_OUT(port) REG(uint32_t, GPIO_BASE, (0x300*port + 0x504)) 
 
 
 enum Direction {
-  DIR_INPUT,
-  DIR_OUTPUT,
+  DIR_INPUT = 0,
+  DIR_OUTPUT = 1,
+  DIR_POS = 0,
+  DIR_WIDTH = 1
 };
 
 enum Input {
-  INPUT_CONNECT = 0 << 1,
-  INPUT_DISCONNECT = 1 << 1,
+  INPUT_CONNECT = 0,
+  INPUT_DISCONNECT = 1,
+  INPUT_POS = 1,
+  INPUT_WIDTH = 1
 };
 
 enum Pull {
-  PULL_DISABLED = 0 << 8,
-  PULL_PULLDOWN = 1 << 2,
-  PULL_PULLUP = 3 << 2,
+  PULL_DISABLED = 0,
+  PULL_PULLDOWN = 1,
+  PULL_PULLUP = 3,
+  PULL_POS = 2,
+  PULL_WIDTH = 2
 };
 
 enum Drive {
-  DRIVE_S0S1 = 0 << 8,
-  DRIVE_H0S1 = 1 << 8,
-  DRIVE_S0H1 = 2 << 8,
-  DRIVE_H0H1 = 3 << 8,
-  DRIVE_D0S1 = 4 << 8,
-  DRIVE_D0H1 = 5 << 8,
-  DRIVE_S0D1 = 6 << 8,
-  DRIVE_H0D1 = 7 << 8,
+  DRIVE_S0S1 = 0,
+  DRIVE_H0S1 = 1,
+  DRIVE_S0H1 = 2,
+  DRIVE_H0H1 = 3,
+  DRIVE_D0S1 = 4,
+  DRIVE_D0H1 = 5,
+  DRIVE_S0D1 = 6,
+  DRIVE_H0D1 = 7,
+  DRIVE_POS = 8,
+  DRIVE_WIDTH = 3
 };
 
 enum Sense {
-  SENSE_DISABLED = 0 << 16,
-  SENSE_HIGH = 2 << 16,
-  SENSE_LOW = 3 << 16,
+  SENSE_DISABLED = 0,
+  SENSE_HIGH = 2,
+  SENSE_LOW = 3,
+  SENSE_POS = 16,
+  SENSE_WIDTH = 2
 };
 
 
-
-static void Gpio_init(const Gpio* self){
-  GPIO_CNF(self->port, self->pin) = 0 | DIR_INPUT | INPUT_DISCONNECT | PULL_DISABLED | DRIVE_S0S1 | SENSE_DISABLED;
+static void gpio_init(Gpio const* const self){
+  GPIO_CNF(self->port, self->pin) = 0;
+  SET_FIELD(GPIO_CNF(self->port, self->pin), DIR_POS, DIR_WIDTH, DIR_INPUT);
+  SET_FIELD(GPIO_CNF(self->port, self->pin), INPUT_POS, INPUT_WIDTH, INPUT_DISCONNECT);
+  SET_FIELD(GPIO_CNF(self->port, self->pin), PULL_POS, PULL_WIDTH, PULL_DISABLED);
+  SET_FIELD(GPIO_CNF(self->port, self->pin), DRIVE_POS, DRIVE_WIDTH, DRIVE_S0S1);
+  SET_FIELD(GPIO_CNF(self->port, self->pin), SENSE_POS, SENSE_WIDTH, SENSE_DISABLED);
   return;
 }
 
 
-Gpio Gpio_create(uint8_t port, uint8_t pin){
+Gpio gpio_create(uint8_t const port, uint8_t const pin){
   Gpio gpio = {port, pin};
-  Gpio_init(&gpio);
+  gpio_init(&gpio);
   return gpio;
 }
 
 
-void Gpio_configConnect(const Gpio* self){
-  GPIO_CNF(self->port, self->pin) &= ~(INPUT_DISCONNECT);
-  GPIO_CNF(self->port, self->pin) |= INPUT_CONNECT;
+void gpio_configConnect(Gpio const* const self){
+  SET_FIELD(GPIO_CNF(self->port, self->pin), INPUT_POS, INPUT_WIDTH, INPUT_CONNECT);
   return;
 }
 
 
-void Gpio_configDisconnect(const Gpio* self){
-  GPIO_CNF(self->port, self->pin) &= ~(INPUT_DISCONNECT);
-  GPIO_CNF(self->port, self->pin) |= INPUT_DISCONNECT;
+void gpio_configDisconnect(Gpio const* const self){
+  SET_FIELD(GPIO_CNF(self->port, self->pin), INPUT_POS, INPUT_WIDTH, INPUT_DISCONNECT);
   return;
 }
 
 
-void Gpio_configOutput(const Gpio* self){
-  Gpio_configDisconnect(self);
-  GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
-  GPIO_CNF(self->port, self->pin) |= DIR_OUTPUT;
-  Gpio_configConnect(self);
+void gpio_configOutput(Gpio const* const self){
+  SET_FIELD(GPIO_CNF(self->port, self->pin), DIR_POS, DIR_WIDTH, DIR_OUTPUT);
   return;
 }
 
 
-void Gpio_configInput(const Gpio* self){
-  Gpio_configDisconnect(self);
-  GPIO_CNF(self->port, self->pin) &= ~(DIR_OUTPUT);
-  GPIO_CNF(self->port, self->pin) |= DIR_INPUT;
-  Gpio_configConnect(self);
+void gpio_configInput(Gpio const* const self){
+  SET_FIELD(GPIO_CNF(self->port, self->pin), DIR_POS, DIR_WIDTH, DIR_INPUT);
   return;
 }
 
 
-void Gpio_setHigh(const Gpio* self){
-  Gpio_configDisconnect(self);
-  Gpio_configOutput(self);
-  GPIO_OUT(self->port) |= (1 << self->pin);
-  Gpio_configConnect(self);
+void gpio_setHigh(Gpio const* const self){
+  SET_BIT(GPIO_OUT(self->port), self->pin);
   return;
 }
 
 
-void Gpio_setLow(const Gpio* self){
-  Gpio_configDisconnect(self);
-  Gpio_configOutput(self);
-  GPIO_OUT(self->port) &= ~(1 << self->pin);
-  Gpio_configConnect(self);
+void gpio_setLow(Gpio const* const self){
+  CLR_BIT(GPIO_OUT(self->port), self->pin);
   return;
 }
 
 
-uint8_t Gpio_read(const Gpio* self){
-  uint8_t input = GPIO_IN(self->port) & (1 << self->pin);
+uint8_t gpio_read(Gpio const* const self){
+  uint8_t input = GET_BIT(GPIO_IN(self->port), self->pin);
   return input;
 }
+

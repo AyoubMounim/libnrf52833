@@ -1,7 +1,7 @@
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/nrf52833.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/edit_cache.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/rebuild_cache.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/list_install_components.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/install.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/install/local.dir
-/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/install/strip.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/nrf52833.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/edit_cache.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/rebuild_cache.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/list_install_components.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/install.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/install/local.dir
+/home/ayoub/libnrf52833/build/CMakeFiles/install/strip.dir

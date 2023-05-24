@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833
+CMAKE_SOURCE_DIR = /home/ayoub/libnrf52833
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build
+CMAKE_BINARY_DIR = /home/ayoub/libnrf52833/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/nrf52833.dir/depend.make
@@ -72,58 +72,58 @@ include CMakeFiles/nrf52833.dir/flags.make
 CMakeFiles/nrf52833.dir/src/clock.c.obj: CMakeFiles/nrf52833.dir/flags.make
 CMakeFiles/nrf52833.dir/src/clock.c.obj: ../src/clock.c
 CMakeFiles/nrf52833.dir/src/clock.c.obj: CMakeFiles/nrf52833.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/nrf52833.dir/src/clock.c.obj"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/clock.c.obj -MF CMakeFiles/nrf52833.dir/src/clock.c.obj.d -o CMakeFiles/nrf52833.dir/src/clock.c.obj -c /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/clock.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/libnrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/nrf52833.dir/src/clock.c.obj"
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/clock.c.obj -MF CMakeFiles/nrf52833.dir/src/clock.c.obj.d -o CMakeFiles/nrf52833.dir/src/clock.c.obj -c /home/ayoub/libnrf52833/src/clock.c
 
 CMakeFiles/nrf52833.dir/src/clock.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nrf52833.dir/src/clock.c.i"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/clock.c > CMakeFiles/nrf52833.dir/src/clock.c.i
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/libnrf52833/src/clock.c > CMakeFiles/nrf52833.dir/src/clock.c.i
 
 CMakeFiles/nrf52833.dir/src/clock.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nrf52833.dir/src/clock.c.s"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/clock.c -o CMakeFiles/nrf52833.dir/src/clock.c.s
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/libnrf52833/src/clock.c -o CMakeFiles/nrf52833.dir/src/clock.c.s
 
 CMakeFiles/nrf52833.dir/src/gpio.c.obj: CMakeFiles/nrf52833.dir/flags.make
 CMakeFiles/nrf52833.dir/src/gpio.c.obj: ../src/gpio.c
 CMakeFiles/nrf52833.dir/src/gpio.c.obj: CMakeFiles/nrf52833.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/nrf52833.dir/src/gpio.c.obj"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/gpio.c.obj -MF CMakeFiles/nrf52833.dir/src/gpio.c.obj.d -o CMakeFiles/nrf52833.dir/src/gpio.c.obj -c /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/gpio.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/libnrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/nrf52833.dir/src/gpio.c.obj"
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/gpio.c.obj -MF CMakeFiles/nrf52833.dir/src/gpio.c.obj.d -o CMakeFiles/nrf52833.dir/src/gpio.c.obj -c /home/ayoub/libnrf52833/src/gpio.c
 
 CMakeFiles/nrf52833.dir/src/gpio.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nrf52833.dir/src/gpio.c.i"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/gpio.c > CMakeFiles/nrf52833.dir/src/gpio.c.i
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/libnrf52833/src/gpio.c > CMakeFiles/nrf52833.dir/src/gpio.c.i
 
 CMakeFiles/nrf52833.dir/src/gpio.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nrf52833.dir/src/gpio.c.s"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/gpio.c -o CMakeFiles/nrf52833.dir/src/gpio.c.s
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/libnrf52833/src/gpio.c -o CMakeFiles/nrf52833.dir/src/gpio.c.s
 
 CMakeFiles/nrf52833.dir/src/uarte.c.obj: CMakeFiles/nrf52833.dir/flags.make
 CMakeFiles/nrf52833.dir/src/uarte.c.obj: ../src/uarte.c
 CMakeFiles/nrf52833.dir/src/uarte.c.obj: CMakeFiles/nrf52833.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/nrf52833.dir/src/uarte.c.obj"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/uarte.c.obj -MF CMakeFiles/nrf52833.dir/src/uarte.c.obj.d -o CMakeFiles/nrf52833.dir/src/uarte.c.obj -c /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/uarte.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/libnrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/nrf52833.dir/src/uarte.c.obj"
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/uarte.c.obj -MF CMakeFiles/nrf52833.dir/src/uarte.c.obj.d -o CMakeFiles/nrf52833.dir/src/uarte.c.obj -c /home/ayoub/libnrf52833/src/uarte.c
 
 CMakeFiles/nrf52833.dir/src/uarte.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nrf52833.dir/src/uarte.c.i"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/uarte.c > CMakeFiles/nrf52833.dir/src/uarte.c.i
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/libnrf52833/src/uarte.c > CMakeFiles/nrf52833.dir/src/uarte.c.i
 
 CMakeFiles/nrf52833.dir/src/uarte.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nrf52833.dir/src/uarte.c.s"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/uarte.c -o CMakeFiles/nrf52833.dir/src/uarte.c.s
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/libnrf52833/src/uarte.c -o CMakeFiles/nrf52833.dir/src/uarte.c.s
 
 CMakeFiles/nrf52833.dir/src/utils.c.obj: CMakeFiles/nrf52833.dir/flags.make
 CMakeFiles/nrf52833.dir/src/utils.c.obj: ../src/utils.c
 CMakeFiles/nrf52833.dir/src/utils.c.obj: CMakeFiles/nrf52833.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/nrf52833.dir/src/utils.c.obj"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/utils.c.obj -MF CMakeFiles/nrf52833.dir/src/utils.c.obj.d -o CMakeFiles/nrf52833.dir/src/utils.c.obj -c /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ayoub/libnrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/nrf52833.dir/src/utils.c.obj"
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/nrf52833.dir/src/utils.c.obj -MF CMakeFiles/nrf52833.dir/src/utils.c.obj.d -o CMakeFiles/nrf52833.dir/src/utils.c.obj -c /home/ayoub/libnrf52833/src/utils.c
 
 CMakeFiles/nrf52833.dir/src/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nrf52833.dir/src/utils.c.i"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/utils.c > CMakeFiles/nrf52833.dir/src/utils.c.i
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/ayoub/libnrf52833/src/utils.c > CMakeFiles/nrf52833.dir/src/utils.c.i
 
 CMakeFiles/nrf52833.dir/src/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nrf52833.dir/src/utils.c.s"
-	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/utils.c -o CMakeFiles/nrf52833.dir/src/utils.c.s
+	arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/ayoub/libnrf52833/src/utils.c -o CMakeFiles/nrf52833.dir/src/utils.c.s
 
 # Object files for target nrf52833
 nrf52833_OBJECTS = \
@@ -141,7 +141,7 @@ libnrf52833.a: CMakeFiles/nrf52833.dir/src/uarte.c.obj
 libnrf52833.a: CMakeFiles/nrf52833.dir/src/utils.c.obj
 libnrf52833.a: CMakeFiles/nrf52833.dir/build.make
 libnrf52833.a: CMakeFiles/nrf52833.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libnrf52833.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ayoub/libnrf52833/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libnrf52833.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/nrf52833.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nrf52833.dir/link.txt --verbose=$(VERBOSE)
 
@@ -154,6 +154,6 @@ CMakeFiles/nrf52833.dir/clean:
 .PHONY : CMakeFiles/nrf52833.dir/clean
 
 CMakeFiles/nrf52833.dir/depend:
-	cd /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833 /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833 /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/nrf52833.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ayoub/libnrf52833/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ayoub/libnrf52833 /home/ayoub/libnrf52833 /home/ayoub/libnrf52833/build /home/ayoub/libnrf52833/build /home/ayoub/libnrf52833/build/CMakeFiles/nrf52833.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/nrf52833.dir/depend
 

@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/clock.c" "CMakeFiles/nrf52833.dir/src/clock.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/clock.c.obj.d"
-  "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/gpio.c" "CMakeFiles/nrf52833.dir/src/gpio.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/gpio.c.obj.d"
-  "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/uarte.c" "CMakeFiles/nrf52833.dir/src/uarte.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/uarte.c.obj.d"
-  "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/src/utils.c" "CMakeFiles/nrf52833.dir/src/utils.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/utils.c.obj.d"
+  "/home/ayoub/libnrf52833/src/clock.c" "CMakeFiles/nrf52833.dir/src/clock.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/clock.c.obj.d"
+  "/home/ayoub/libnrf52833/src/gpio.c" "CMakeFiles/nrf52833.dir/src/gpio.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/gpio.c.obj.d"
+  "/home/ayoub/libnrf52833/src/uarte.c" "CMakeFiles/nrf52833.dir/src/uarte.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/uarte.c.obj.d"
+  "/home/ayoub/libnrf52833/src/utils.c" "CMakeFiles/nrf52833.dir/src/utils.c.obj" "gcc" "CMakeFiles/nrf52833.dir/src/utils.c.obj.d"
   )
 
 # Targets to which this target links.

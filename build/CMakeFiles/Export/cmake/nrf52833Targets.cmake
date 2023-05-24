@@ -52,7 +52,7 @@ endif()
 add_library(nrf::nrf52833 STATIC IMPORTED)
 
 set_target_properties(nrf::nrf52833 PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include"
 )
 
 # Load information for each installed configuration.

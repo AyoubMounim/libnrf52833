@@ -1,8 +1,8 @@
-# Install script for directory: /home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833
+# Install script for directory: /home/ayoub/libnrf52833
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ayoub/libnrf52833/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,16 +38,16 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/libnrf52833.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/ayoub/libnrf52833/build/libnrf52833.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/nrf52833" TYPE FILE FILES
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/clock.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/gpio.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/macros.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/nvmc.h"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833/uarte.h"
+    "/home/ayoub/libnrf52833/include/nrf52833/clock.h"
+    "/home/ayoub/libnrf52833/include/nrf52833/gpio.h"
+    "/home/ayoub/libnrf52833/include/nrf52833/macros.h"
+    "/home/ayoub/libnrf52833/include/nrf52833/nvmc.h"
+    "/home/ayoub/libnrf52833/include/nrf52833/uarte.h"
     )
 endif()
 
@@ -55,7 +55,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/cmake/nrf52833Targets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/cmake/nrf52833Targets.cmake"
-         "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets.cmake")
+         "/home/ayoub/libnrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/cmake/nrf52833Targets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -64,16 +64,16 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/cmake" TYPE FILE FILES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/cmake" TYPE FILE FILES "/home/ayoub/libnrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/cmake" TYPE FILE FILES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/cmake" TYPE FILE FILES "/home/ayoub/libnrf52833/build/CMakeFiles/Export/cmake/nrf52833Targets-noconfig.cmake")
   endif()
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/cmake" TYPE FILE FILES
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/nrf52833Config.cmake"
-    "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/nrf52833ConfigVersion.cmake"
+    "/home/ayoub/libnrf52833/build/nrf52833Config.cmake"
+    "/home/ayoub/libnrf52833/build/nrf52833ConfigVersion.cmake"
     )
 endif()
 
@@ -85,5 +85,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ayoub/libnrf52833/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

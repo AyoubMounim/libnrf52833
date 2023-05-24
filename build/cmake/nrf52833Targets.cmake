@@ -45,14 +45,14 @@ unset(_expectedTargets)
 add_library(nrf::nrf52833 STATIC IMPORTED)
 
 set_target_properties(nrf::nrf52833 PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/include/nrf52833"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/ayoub/libnrf52833/include/nrf52833"
 )
 
 # Import target "nrf::nrf52833" for configuration ""
 set_property(TARGET nrf::nrf52833 APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(nrf::nrf52833 PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "C"
-  IMPORTED_LOCATION_NOCONFIG "/home/ayoub/embed_projects/micro_bit_c/libraries/nrf52833/build/libnrf52833.a"
+  IMPORTED_LOCATION_NOCONFIG "/home/ayoub/libnrf52833/build/libnrf52833.a"
   )
 
 # This file does not depend on other imported targets which have
