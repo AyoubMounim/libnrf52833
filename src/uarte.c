@@ -1,6 +1,125 @@
 
+#include <stdint.h>
 #include "uarte.h"
+#include "macros.h"
 #include "utils.h"
+
+
+#define UARTE0_BASE 0x40002000
+
+#define UARTE0_SHORTS REG(uint32_t, UARTE0_BASE, 0x200)
+#define UARTE0_ERRORSRC REG(uint32_t, UARTE0_BASE, 0x480)
+#define UARTE0_ENABLE REG(uint32_t, UARTE0_BASE, 0x500)
+#define UARTE0_BAUDRATE REG(uint32_t, UARTE0_BASE, 0x524)
+#define UARTE0_CONFIG REG(uint32_t, UARTE0_BASE, 0x56C)
+
+#define MAX_INPUT_LEN 32
+
+
+enum {
+  UARTE0_SHORTS_ENDRX_STARTRX_POS = 5,
+  UARTE0_SHORTS_ENDRX_STOPRX_POS = 6
+};
+
+enum {
+  UARTE0_ERRORSRC_OVERRUN_POS = 0,
+  UARTE0_ERRORSRC_PARITY_POS = 1,
+  UARTE0_ERRORSRC_FRAMING_POS = 2,
+  UARTE0_ERRORSRC_BREAK_POS = 3
+};
+
+enum {
+  UARTE0_ENABLE_DISABLED = 0,
+  UARTE0_ENABLE_ENABLED = 8,
+  UARTE0_ENABLE_WIDTH = 4,
+  UARTE0_ENABLE_POS = 0
+};
+
+enum {
+  UARTE0_BAUDRATE_9600 = 0x00275000,
+  UARTE0_BAUDRATE_115200 = 0x01D60000,
+};
+
+enum {
+  UARTE0_CONFIG_PARITY_EXCLUDED = 0,
+  UARTE0_CONFIG_PARITY_INCLUDED = 7,
+  UARTE0_CONFIG_PARITY_WIDTH = 3,
+  UARTE0_CONFIG_PARITY_POS = 1,
+  UARTE0_CONFIG_HWFC_POS = 0,
+  UARTE0_CONFIG_STOP_POS = 4,
+  UARTE0_CONFIG_PARITYTYPE_POS = 8
+};
+
+
+typedef struct {
+  uint32_t startRx;
+  uint32_t stopRx;
+  uint32_t startTx;
+  uint32_t stopTx;
+  uint64_t _reserved0;
+  uint64_t _reserved1;
+  uint64_t _reserved2;
+  uint32_t _reserved3;
+  uint32_t flushRx;
+} UarteTask;
+
+
+typedef struct {
+  uint32_t cts;
+  uint32_t ncts;
+  uint32_t rxdRdy;
+  uint32_t _reserved0;
+  uint32_t endRx;
+  uint64_t _reserved1;
+  uint32_t txdRdy;
+  uint32_t endTx;
+  uint32_t error;
+  uint64_t _reserved2;
+  uint64_t _reserved3;
+  uint64_t _reserved4;
+  uint32_t _reserved5;
+  uint32_t rxTo;
+  uint32_t _reserved6;
+  uint32_t rxStarted;
+  uint32_t txStarted;
+  uint32_t _reserved7;
+  uint32_t txStopped;
+} UarteEvent;
+
+
+typedef struct {
+  uint32_t inten;
+  uint32_t intenSet;
+  uint32_t intenClr;
+} UarteInterrupt;
+
+
+typedef struct {
+  uint32_t pselRts;
+  uint32_t pselTxd;
+  uint32_t pselCts;
+  uint32_t pselRxd;
+} UartePin;
+
+
+typedef struct {
+  uint32_t rxdPtr;
+  uint32_t rxdMaxCnt;
+  uint32_t rxdAmount;
+  uint32_t _reserved0;
+  uint32_t txdPtr;
+  uint32_t txdMaxCnt;
+  uint32_t txdAmount;
+} UarteData;
+
+
+UarteTask* pUarteTask = (UarteTask*) UARTE0_BASE;
+UarteEvent* pUarteEvent = (UarteEvent*) (UARTE0_BASE + 0x100);
+UarteInterrupt* pUarteInterrupt = (UarteInterrupt*) (UARTE0_BASE + 0x300);
+UartePin* pUartePin = (UartePin*) (UARTE0_BASE + 0x508);
+UarteData* pUarteData = (UarteData*) (UARTE0_BASE + 0x534);
+
+
 
 
 enum Baudrate {
