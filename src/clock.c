@@ -57,7 +57,7 @@ typedef struct {
   uint32_t ctto;
   uint64_t _reserved1;
   uint64_t _reserved2;
-  uint64_t _reserved3;
+  uint32_t _reserved3;
   uint32_t ctStarted;
   uint32_t ctStopped;
 } ClockEvent;
