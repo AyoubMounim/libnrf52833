@@ -1,2 +1,0 @@
-/usr/bin/ar qc libnrf52833.a CMakeFiles/nrf52833.dir/src/clock.c.obj CMakeFiles/nrf52833.dir/src/gpio.c.obj CMakeFiles/nrf52833.dir/src/uarte.c.obj CMakeFiles/nrf52833.dir/src/utils.c.obj
-/usr/bin/ranlib libnrf52833.a
