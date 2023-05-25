@@ -3,41 +3,50 @@
 #define UARTE_H
 
 #include "gpio.h"
+#include <stdint.h>
 
 
-typedef struct Uarte Uarte;
-struct Uarte {
-  const uint8_t maxIputLen;
-  Gpio txPin;
-  Gpio rxPin;
-};
+typedef enum {
+  BAUD_9600 = 0x00275000,
+  BAUD_115200 = 0x01D60000,
+  BAUD_250000 = 0x04000000
+} Baudrate;
+
+typedef enum {
+  STOPBITS_ONE,
+  STOPBITS_TWO
+} Stopbits;
 
 
-Uarte Uarte_create(Gpio* txPin, Gpio* rxPin);
+typedef struct {
+  uint8_t const unit;
+  uint8_t maxIputLen;
+} Uarte;
 
-void Uarte_init(Uarte* self);
-void Uarte_enable(Uarte* self);
-void Uarte_disable(Uarte* self);
-void Uarte_setTxPin(Uarte* self);
-void Uarte_setRxPin(Uarte* self);
 
-void Uarte_writeChar(Uarte* self, const char* ch);
-void Uarte_writeStr(Uarte* self, const char* str);
-void Uarte_writeInt(Uarte* self, uint32_t integer, uint8_t base);
+Uarte uarte_create(uint8_t const unit, uint8_t const maxInputLen);
+void uarte_enable(Uarte const* const self);
+void uarte_disable(Uarte const* const self);
 
-void Uarte_input(Uarte* self, char* input);
-void Uarte_getChar(Uarte* self, char* ch);
-void Uarte_listenChar(Uarte* self, char* ch);
-void Uarte_endl(Uarte* self);
-void Uarte_flush(Uarte* self);
+void uarte_setTxPin(Uarte const* const self, Gpio const* const pin);
+void uarte_setRxPin(Uarte const* const self, Gpio const* const pin);
+void uarte_setCtsPin(Uarte const* const self, Gpio const* const pin);
+void uarte_setRtsPin(Uarte const* const self, Gpio const* const pin);
 
-void Uarte_setBaudrate9600(Uarte* self);
-void Uarte_setBaudrate115200(Uarte* self);
-void Uarte_setParityNone(Uarte* self);
-void Uarte_setParityEven(Uarte* self);
-void Uarte_setParityOdd(Uarte* self);
-void Uarte_setHwfcEnable(Uarte* self);
-void Uarte_setHwfcDisable(Uarte* self);
+void uarte_setBaudrate(Uarte const* const self, Baudrate baudrate);
+void uarte_setStopbits(Uarte const* const self, Stopbits stopbits);
+void uarte_setParityNone(Uarte const* const self);
+void uarte_setParityEven(Uarte const* const self);
+void uarte_setParityOdd(Uarte const* const self);
+void uarte_enableHwfc(Uarte const* const self);
+void uarte_disableHwfc(Uarte const* const self);
+void uarte_enableEndRxToStartRxShort(Uarte const* const self);
+void uarte_disableEndRxToStartRxShort(Uarte const* const self);
+void uarte_enableEndRxToStopRxShort(Uarte const* const self);
+void uarte_disableEndRxToStopRxShort(Uarte const* const self);
+
+void uarte_writeChar(Uarte const* const self, char const* const ch);
+void uarte_writeStr(Uarte const* const self, char const* const str);
 
 
 #endif
