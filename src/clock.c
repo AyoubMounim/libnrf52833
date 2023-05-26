@@ -4,6 +4,9 @@
 #include <stdint.h>
 
 
+#define nop() asm volatile ("nop")
+
+
 #define CLOCK_BASE 0x40000000
 
 #define CLOCK_LFCLKSRC       REG(uint32_t, CLOCK_BASE, 0x518)

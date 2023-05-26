@@ -17,9 +17,5 @@
     reg = (reg & ~FIELD_MASK(pos, width)) | (val << pos)
 
 
-/* assembly macros */
-#define nop() asm volatile ("nop")
-#define pause() asm volatile ("wfe")
-
 #endif
 
