@@ -315,7 +315,7 @@ void uarte_excludeParity(Uarte const* const self){
 void uarte_configReset(Uarte const* const self){
   uarte_disableHwfc(self);
   uarte_excludeParity(self);
-  uarte_setStopBits(self, STOPBITS_ONE);
+  uarte_setStopbits(self, STOPBITS_ONE);
   uarte_disableEndRxToStartRxShort(self);
   uarte_disableEndRxToStopRxShort(self);
   uarte_setBaudrate(self, BAUD_250000);
