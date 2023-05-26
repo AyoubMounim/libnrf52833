@@ -276,6 +276,21 @@ void uarte_writeStr(Uarte const* const self, char const* const str){
   return;
 }
 
+void uarte_writeInt(Uarte const* const self, int32_t integer){
+  uint8_t const base = 10;
+  static const char dec[] = "0123456789ABCDEF";
+  uarte_eventsReset(self);
+  uint8_t n_digits = number_of_digits(integer, base);
+  char digits[n_digits+1];
+  digits[n_digits] = '\0';
+  while (n_digits-- > 0){
+      digits[n_digits] = dec[integer%base];
+      integer /= base;
+  }
+  uarte_writeStr(self, digits);
+  return;
+}
+
 void uarte_eventsReset(Uarte const* const self){
   pUarteEvent[self->unit]->cts = 0;
   pUarteEvent[self->unit]->ncts = 0;

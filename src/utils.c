@@ -24,3 +24,13 @@ uint8_t strCompare(const char string_1[], const char string_2[]){
   }
   return 1;
 }
+
+
+uint8_t numberOfDigits(uint32_t integer, uint8_t base){
+  uint8_t nDigits = 0;
+  do {
+      nDigits++; 
+      integer /= base;
+  } while (integer > 0);
+  return nDigits;
+}
