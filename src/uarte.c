@@ -193,7 +193,7 @@ void uarte_setBaudrate(Uarte const* const self, Baudrate baudrate){
   return;
 }
 
-void uarte_setStopBits(Uarte const* const self, Stopbits stopbits){
+void uarte_setStopbits(Uarte const* const self, Stopbits stopbits){
   switch (stopbits){
     case STOPBITS_ONE:
       CLR_BIT(UARTE_CONFIG(self->unit), UARTE_CONFIG_STOP_POS);

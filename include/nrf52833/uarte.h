@@ -49,4 +49,5 @@ void uarte_writeChar(Uarte const* const self, char const* const ch);
 void uarte_writeStr(Uarte const* const self, char const* const str);
 
 
+
 #endif
