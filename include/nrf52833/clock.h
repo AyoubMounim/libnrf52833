@@ -20,7 +20,6 @@ void lfClockSetDebounceNormal(void);
 void lfClockSetDebounceExtended(void);
 
 void setCTIV(uint8_t calibrationInterval);
-
 void sleep(uint32_t usec);
 
 

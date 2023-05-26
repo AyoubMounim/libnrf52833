@@ -38,7 +38,7 @@ set(CMAKE_INSTALL_PREFIX
 )
 
 set(public_headers
-    ${HEADERS_DIR}/clock.h ${HEADERS_DIR}/gpio.h ${HEADERS_DIR}/macros.h ${HEADERS_DIR}/nvmc.h ${HEADERS_DIR}/uarte.h
+    ${HEADERS_DIR}/clock.h ${HEADERS_DIR}/gpio.h ${HEADERS_DIR}/nvmc.h ${HEADERS_DIR}/uarte.h
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")

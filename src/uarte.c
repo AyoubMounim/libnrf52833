@@ -280,7 +280,7 @@ void uarte_writeInt(Uarte const* const self, int32_t integer){
   uint8_t const base = 10;
   static const char dec[] = "0123456789ABCDEF";
   uarte_eventsReset(self);
-  uint8_t n_digits = number_of_digits(integer, base);
+  uint8_t n_digits = numberOfDigits(integer, base);
   char digits[n_digits+1];
   digits[n_digits] = '\0';
   while (n_digits-- > 0){
