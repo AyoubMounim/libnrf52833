@@ -359,7 +359,7 @@ void uarte_disable(Uarte const* const self){
   pUarteEvent[self->unit]->rxTo = 0;
   pUarteTask[self->unit]->stopRx = 1;
   pUarteTask[self->unit]->stopTx = 1;
-  while (!(pUarteEvent[self->unit]->txStarted) || !(pUarteEvent[self->unit]->rxTo)){}
+  while (!(pUarteEvent[self->unit]->txStarted)){}
   SET_FIELD(UARTE_ENABLE(self->unit), UARTE_ENABLE_POS, UARTE_ENABLE_WIDTH, UARTE_ENABLE_DISABLED);
   return;
 }
