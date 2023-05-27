@@ -114,25 +114,25 @@ typedef struct {
 } UarteData;
 
 
-UarteTask* pUarteTask[] = {
-  (UarteTask*) UARTE_BASE(0),
-  (UarteTask*) UARTE_BASE(1)
+UarteTask volatile* pUarteTask[] = {
+  (UarteTask volatile*) UARTE_BASE(0),
+  (UarteTask volatile*) UARTE_BASE(1)
 };
-UarteEvent* pUarteEvent[] = {
-  (UarteEvent*) (UARTE_BASE(0) + 0x100),
-  (UarteEvent*) (UARTE_BASE(1) + 0x100)
+UarteEvent volatile* pUarteEvent[] = {
+  (UarteEvent volatile*) (UARTE_BASE(0) + 0x100),
+  (UarteEvent volatile*) (UARTE_BASE(1) + 0x100)
 };
-UarteInterrupt* pUarteInterrupt[] = {
-  (UarteInterrupt*) (UARTE_BASE(0) + 0x300),
-  (UarteInterrupt*) (UARTE_BASE(1) + 0x300)
+UarteInterrupt volatile* pUarteInterrupt[] = {
+  (UarteInterrupt volatile*) (UARTE_BASE(0) + 0x300),
+  (UarteInterrupt volatile*) (UARTE_BASE(1) + 0x300)
 };
-UartePin* pUartePin[] = {
-  (UartePin*) (UARTE_BASE(0) + 0x508),
-  (UartePin*) (UARTE_BASE(1) + 0x508)
+UartePin volatile* pUartePin[] = {
+  (UartePin volatile*) (UARTE_BASE(0) + 0x508),
+  (UartePin volatile*) (UARTE_BASE(1) + 0x508)
 };
-UarteData* pUarteData[] = {
-  (UarteData*) (UARTE_BASE(0) + 0x534),
-  (UarteData*) (UARTE_BASE(1) + 0x534)
+UarteData volatile* pUarteData[] = {
+  (UarteData volatile*) (UARTE_BASE(0) + 0x534),
+  (UarteData volatile*) (UARTE_BASE(1) + 0x534)
 };
 
 
@@ -343,8 +343,8 @@ void uarte_interruptReset(Uarte const* const self){
 }
 
 void uarte_pinsReset(Uarte const* const self){
-  pUartePin[self->unit]->pselRts= 0xFFFFFFFF;
-  pUartePin[self->unit]->pselTxd= 0xFFFFFFFF;
+  pUartePin[self->unit]->pselRts = 0xFFFFFFFF;
+  pUartePin[self->unit]->pselTxd = 0xFFFFFFFF;
   pUartePin[self->unit]->pselCts = 0xFFFFFFFF;
   pUartePin[self->unit]->pselRxd= 0xFFFFFFFF;
 }
@@ -359,7 +359,12 @@ void uarte_disable(Uarte const* const self){
   pUarteEvent[self->unit]->rxTo = 0;
   pUarteTask[self->unit]->stopRx = 1;
   pUarteTask[self->unit]->stopTx = 1;
-  while (!(pUarteEvent[self->unit]->txStopped) || !(pUarteEvent[self->unit]->rxTo)){}
+  uint32_t stopped = (pUarteEvent[self->unit])->txStopped;
+  uint32_t to = (pUarteEvent[self->unit])->rxTo;
+  while (!(stopped) || !(to)){
+    stopped = (pUarteEvent[self->unit])->txStopped;
+    to = (pUarteEvent[self->unit])->rxTo;
+  }
   SET_FIELD(UARTE_ENABLE(self->unit), UARTE_ENABLE_POS, UARTE_ENABLE_WIDTH, UARTE_ENABLE_DISABLED);
   return;
 }
