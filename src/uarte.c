@@ -52,7 +52,7 @@ enum {
 };
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
   uint32_t startRx;
   uint32_t stopRx;
   uint32_t startTx;
@@ -65,7 +65,7 @@ typedef struct {
 } UarteTask;
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
   uint32_t cts;
   uint32_t ncts;
   uint32_t rxdRdy;
@@ -88,14 +88,14 @@ typedef struct {
 } UarteEvent;
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
   uint32_t inten;
   uint32_t intenSet;
   uint32_t intenClr;
 } UarteInterrupt;
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
   uint32_t pselRts;
   uint32_t pselTxd;
   uint32_t pselCts;
@@ -103,7 +103,7 @@ typedef struct {
 } UartePin;
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
   uint32_t rxdPtr;
   uint32_t rxdMaxCnt;
   uint32_t rxdAmount;
@@ -263,6 +263,8 @@ void uarte_writeChar(Uarte const* const self, char const* const ch){
 }
 
 void uarte_writeStr(Uarte const* const self, char const* const str){
+  uint32_t eventsSize = sizeof(UarteEvent)/sizeof(uint32_t);
+  uint32_t tasksSize = sizeof(UarteTask)/sizeof(uint32_t);
   uarte_eventsReset(self);
   uint32_t bufferSize = strLength(str);
   char buffer[bufferSize];
@@ -272,7 +274,9 @@ void uarte_writeStr(Uarte const* const self, char const* const str){
   pUarteData[self->unit]->txdMaxCnt = bufferSize;
   pUarteData[self->unit]->txdPtr = (uint32_t) buffer;
   pUarteTask[self->unit]->startTx = 1;
-  while (!(pUarteEvent[self->unit]->endTx)){}
+  while (!(pUarteEvent[self->unit]->endTx)){
+    uint32_t volatile* eventAddr = &(pUarteEvent[self->unit]->endTx);
+  }
   return;
 }
 
@@ -359,18 +363,17 @@ void uarte_disable(Uarte const* const self){
   pUarteEvent[self->unit]->rxTo = 0;
   pUarteTask[self->unit]->stopRx = 1;
   pUarteTask[self->unit]->stopTx = 1;
-  uint32_t stopped = (pUarteEvent[self->unit])->txStopped;
-  uint32_t to = (pUarteEvent[self->unit])->rxTo;
-  while (!(stopped) || !(to)){
-    stopped = (pUarteEvent[self->unit])->txStopped;
-    to = (pUarteEvent[self->unit])->rxTo;
-  }
+
+  CLR_BIT(UARTE_TXSTOPPED, 0);
+  SET_BIT(UARTE_TXSTOP, 0);
+
+  while (!(GET_BIT(UARTE_TXSTOPPED, 0))){}
   SET_FIELD(UARTE_ENABLE(self->unit), UARTE_ENABLE_POS, UARTE_ENABLE_WIDTH, UARTE_ENABLE_DISABLED);
   return;
 }
 
 void uarte_init(Uarte const* const self){
-  uarte_disable(self);
+  // uarte_disable(self);
   uarte_configReset(self);
   uarte_eventsReset(self);
   uarte_interruptReset(self);
