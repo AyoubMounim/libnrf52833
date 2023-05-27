@@ -14,8 +14,6 @@
 #define UARTE_BAUDRATE(unit) REG(uint32_t, UARTE_BASE(unit), 0x524)
 #define UARTE_CONFIG(unit) REG(uint32_t, UARTE_BASE(unit), 0x56C)
 
-#define MAX_INPUT_LEN 32
-
 
 enum {
   UARTE_SHORTS_ENDRX_STARTRX_POS = 5,
@@ -34,11 +32,6 @@ enum {
   UARTE_ENABLE_ENABLED = 8,
   UARTE_ENABLE_WIDTH = 4,
   UARTE_ENABLE_POS = 0
-};
-
-enum {
-  UARTE_BAUDRATE_9600 = 0x00275000,
-  UARTE_BAUDRATE_115200 = 0x01D60000,
 };
 
 enum {
