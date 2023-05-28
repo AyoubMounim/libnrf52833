@@ -1,5 +1,5 @@
 
-#include "nvmc.h"
+#include "nrf52833/nvmc.h"
 #include "macros.h"
 #include <stdint.h>
 

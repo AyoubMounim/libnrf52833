@@ -1,7 +1,7 @@
 
 #include <stdint.h>
-#include "gpio.h"
-#include "uarte.h"
+#include "nrf52833/gpio.h"
+#include "nrf52833/uarte.h"
 #include "macros.h"
 #include "utils.h"
 

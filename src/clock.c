@@ -1,5 +1,5 @@
 
-#include "clock.h"
+#include "nrf52833/clock.h"
 #include "macros.h"
 #include <stdint.h>
 

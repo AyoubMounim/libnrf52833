@@ -1,5 +1,5 @@
 
-#include "gpio.h"
+#include "nrf52833/gpio.h"
 #include "macros.h"
 
 
