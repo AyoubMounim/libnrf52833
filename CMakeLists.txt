@@ -55,11 +55,7 @@ include(GNUInstallDirs)
 #    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 #)
 
-install(TARGETS ${PROJECT_NAME}
-    EXPORT "${PROJECT_NAME}Targets"
-    PUBLIC_HEADER DESTINATION /usr/include/${PROJECT_NAME}
-    INCLUDES DESTINATION /usr/include
-)
+install(TARGETS ${PROJECT_NAME} DESTINATION /usr/lib/${PROJECT_NAME})
 
 set(namespace nrf)
 
