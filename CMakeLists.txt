@@ -32,8 +32,13 @@ message(
     "Default: ${CMAKE_INSTALL_PREFIX}\n"
     "set to: ${CMAKE_SOURCE_DIR}/install"    
 )
+#set(CMAKE_INSTALL_PREFIX
+#    "${CMAKE_SOURCE_DIR}/install"
+#    CACHE PATH "Where the lib is installed" FORCE
+#)
+
 set(CMAKE_INSTALL_PREFIX
-    "${CMAKE_SOURCE_DIR}/install"
+    "/usr"
     CACHE PATH "Where the lib is installed" FORCE
 )
 
@@ -44,10 +49,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
 include(GNUInstallDirs)
+#install(TARGETS ${PROJECT_NAME}
+#    EXPORT "${PROJECT_NAME}Targets"
+#    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+#    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+#)
+
 install(TARGETS ${PROJECT_NAME}
     EXPORT "${PROJECT_NAME}Targets"
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PUBLIC_HEADER DESTINATION /usr/include/${PROJECT_NAME}
+    INCLUDES DESTINATION /usr/include
 )
 
 set(namespace nrf)

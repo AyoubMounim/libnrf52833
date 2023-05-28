@@ -36,6 +36,7 @@ void uarte_setCtsPin(Uarte const* const self, Gpio const* const pin);
 void uarte_setRtsPin(Uarte const* const self, Gpio const* const pin);
 
 void uarte_setBaudrate(Uarte const* const self, Baudrate baudrate);
+Baudrate uarte_getBaudrate(Uarte const* const self);
 void uarte_setStopbits(Uarte const* const self, Stopbits stopbits);
 void uarte_setParityNone(Uarte const* const self);
 void uarte_setParityEven(Uarte const* const self);

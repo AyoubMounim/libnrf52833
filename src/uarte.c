@@ -193,6 +193,20 @@ void uarte_setBaudrate(Uarte const* const self, Baudrate baudrate){
   return;
 }
 
+Baudrate uarte_getBaudrate(Uarte const* const self){
+  uint32_t baudrate = UARTE_BAUDRATE(self->unit);
+  switch (baudrate){
+    case 0x00275000:
+      return BAUD_9600;
+    case 0x01D60000:
+      return BAUD_115200;
+    case 0x04000000:
+      return BAUD_250000;
+    default:
+      return BAUD_250000;
+  }
+}
+
 void uarte_setStopbits(Uarte const* const self, Stopbits stopbits){
   switch (stopbits){
     case STOPBITS_ONE:
