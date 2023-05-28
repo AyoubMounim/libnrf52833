@@ -22,5 +22,5 @@ target_sources(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
-install(TARGETS ${PROJECT_NAME} DESTINATION /usr/lib/${PROJECT_NAME})
-install(FILES ${HEADERS} DESTINATION /usr/include/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME} DESTINATION ~/embed_projects/micro_bit_c/lib/${PROJECT_NAME})
+install(FILES ${HEADERS} DESTINATION ~/embed_projects/micro_bit_c/include/${PROJECT_NAME})
