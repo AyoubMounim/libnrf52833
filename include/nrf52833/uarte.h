@@ -26,6 +26,7 @@ typedef struct {
 
 Uarte uarte_create(uint8_t const unit, uint8_t const maxInputLen);
 void uarte_init(Uarte const* const self);
+void uarte_reset(Uarte const* const self);
 void uarte_enable(Uarte const* const self);
 void uarte_disable(Uarte const* const self);
 

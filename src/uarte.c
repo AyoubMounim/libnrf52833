@@ -143,6 +143,13 @@ Uarte uarte_create(uint8_t const unit, uint8_t const maxInputLen){
   return uarte;
 }
 
+void uarte_reset(Uarte const* const self){
+  uarte_disable(self);
+  uarte_init(self);
+  return;
+}
+
+
 void uarte_setTxPin(Uarte const* const self, Gpio const* const pin){
   uarte_disable(self);
   gpio_configDisconnect(pin);
