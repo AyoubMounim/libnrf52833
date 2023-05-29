@@ -87,6 +87,7 @@ ClockStatus* pClockStatus = (ClockStatus*) (CLOCK_BASE + 0x40C);
 
 void hfClockInit(void){
   hfClockStop();
+  hfClockSetDebounce(0x10);
   return;
 }
 
@@ -109,6 +110,7 @@ void hfClockSetDebounce(uint8_t debounce){
 
 void lfClockInit(void){
   lfClockStop();
+  lfClockSetDebounceNormal();
   return;
 }
 

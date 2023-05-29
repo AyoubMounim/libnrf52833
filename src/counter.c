@@ -15,12 +15,12 @@
 
 
 enum {
-    COUNTER_EVTEN_TICK_POS = 0,
-    COUNTER_EVTEN_OVRFLW_POS = 1,
-    COUNTER_EVTEN_COMPARE0_POS = 16,
-    COUNTER_EVTEN_COMPARE1_POS = 17,
-    COUNTER_EVTEN_COMPARE2_POS = 18,
-    COUNTER_EVTEN_COMPARE3_POS = 19
+  COUNTER_EVTEN_TICK_POS = 0,
+  COUNTER_EVTEN_OVRFLW_POS = 1,
+  COUNTER_EVTEN_COMPARE0_POS = 16,
+  COUNTER_EVTEN_COMPARE1_POS = 17,
+  COUNTER_EVTEN_COMPARE2_POS = 18,
+  COUNTER_EVTEN_COMPARE3_POS = 19
 };
 
 
@@ -42,39 +42,39 @@ typedef struct __attribute__((packed)){
 } CounterInterrupt;
 
 typedef struct __attribute__((packed)){
-    uint32_t compare0;
-    uint32_t compare1;
-    uint32_t compare2;
-    uint32_t compare3;
+  uint32_t compare0;
+  uint32_t compare1;
+  uint32_t compare2;
+  uint32_t compare3;
 } CounterCompareEvent;
 
 typedef struct __attribute__((packed)){
-    uint32_t compare0;
-    uint32_t compare1;
-    uint32_t compare2;
-    uint32_t compare3;
+  uint32_t compare0;
+  uint32_t compare1;
+  uint32_t compare2;
+  uint32_t compare3;
 } CounterCompareValue;
 
 
 CounterTask volatile* pCounterTask[] = {
-    (CounterTask volatile*) COUNTER_BASE(0),
-    (CounterTask volatile*) COUNTER_BASE(1),
+  (CounterTask volatile*) COUNTER_BASE(0),
+  (CounterTask volatile*) COUNTER_BASE(1),
 };
 CounterEvent volatile* pCounterEvent[] = {
-    (CounterEvent volatile*) (COUNTER_BASE(0) + 0x100),
-    (CounterEvent volatile*) (COUNTER_BASE(1) + 0x100),
+  (CounterEvent volatile*) (COUNTER_BASE(0) + 0x100),
+  (CounterEvent volatile*) (COUNTER_BASE(1) + 0x100),
 };
 CounterInterrupt volatile* pCounterInterrupt[] = {
-    (CounterInterrupt volatile*) (COUNTER_BASE(0) + 0x304),
-    (CounterInterrupt volatile*) (COUNTER_BASE(1) + 0x304),
+  (CounterInterrupt volatile*) (COUNTER_BASE(0) + 0x304),
+  (CounterInterrupt volatile*) (COUNTER_BASE(1) + 0x304),
 };
 CounterCompareEvent volatile* pCounterCompareEvent[] = {
-    (CounterCompareEvent volatile*) (COUNTER_BASE(0) + 0x140),
-    (CounterCompareEvent volatile*) (COUNTER_BASE(1) + 0x140),
+  (CounterCompareEvent volatile*) (COUNTER_BASE(0) + 0x140),
+  (CounterCompareEvent volatile*) (COUNTER_BASE(1) + 0x140),
 };
 CounterCompareValue volatile* pCounterCompareValue[] = {
-    (CounterCompareValue volatile*) (COUNTER_BASE(0) + 0x540),
-    (CounterCompareValue volatile*) (COUNTER_BASE(1) + 0x540),
+  (CounterCompareValue volatile*) (COUNTER_BASE(0) + 0x540),
+  (CounterCompareValue volatile*) (COUNTER_BASE(1) + 0x540),
 };
 
 
@@ -82,14 +82,14 @@ void counter_init(const Counter *const self);
 
 
 Counter counter_create(uint8_t const unit, uint32_t const period){
-    Counter counter = {.unit=unit, .periodMicroSec=period};
-    counter_init(&counter);
-    return counter;
+  Counter counter = {.unit=unit, .periodMicroSec=period};
+  counter_init(&counter);
+  return counter;
 }
 
 void counter_reset(Counter const* const self){
-    counter_init(self);
-    return;
+  counter_init(self);
+  return;
 }
 
 
@@ -105,8 +105,11 @@ void counter_stop(Counter const* const self){
 
 void counter_count(Counter const* const self, uint32_t countTo){
   counter_reset(self);
+  SET_BIT(COUNTER_EVTEN(self->unit), COUNTER_EVTEN_COMPARE0_POS);
   pCounterCompareValue[self->unit]->compare0 = countTo;
-  while ((!pCounterCompareEvent[self->unit]->compare0)){}
+  counter_start(self);
+  while (!(pCounterCompareEvent[self->unit]->compare0)){}
+  counter_stop(self);
   return;
 }
 

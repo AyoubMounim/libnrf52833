@@ -269,8 +269,10 @@ void uarte_disableEndRxToStopRxShort(Uarte const* const self){
 
 void uarte_writeChar(Uarte const* const self, char const* const ch){
   uarte_eventsReset(self);
-  pUarteData[self->unit]->txdMaxCnt = 1;
-  pUarteData[self->unit]->txdPtr = (uint32_t) ch;
+  char buffer[1] = {*ch};
+  uint32_t buffSize = 1;
+  pUarteData[self->unit]->txdMaxCnt = buffSize;
+  pUarteData[self->unit]->txdPtr = (uint32_t) buffer;
   pUarteTask[self->unit]->startTx = 1;
   while (!(pUarteEvent[self->unit]->endTx)){}
   return;
@@ -307,25 +309,26 @@ void uarte_writeInt(Uarte const* const self, int32_t integer){
 
 void uarte_getChar(Uarte const* const self, char* chInput){
   uarte_eventsReset(self);
-  pUarteData[self->unit]->rxdMaxCnt = 1;
+  uint32_t buffSize = 1;
+  pUarteData[self->unit]->rxdMaxCnt = buffSize;
   pUarteData[self->unit]->rxdPtr = (uint32_t) chInput;
   pUarteTask[self->unit]->startRx = 1;
-  while (!(pUarteEvent[self->unit]->endRx)){}
+  while (!(pUarteEvent[self->unit]->endRx) || !(pUarteEvent[self->unit]->rxdRdy)){}
   return;
 }
 
 void uarte_input(Uarte const* const self, char* strInput){
-  char rxBuffer[1];
+  char rxBuffer[1] = {'e'};
   uint8_t i = 0;
   while (i < self->maxIputLen){
-      uarte_getChar(self, rxBuffer);
-      if (*rxBuffer == '\r'){
-          strInput[i] = '\0';
-          return;
-      }
-      uarte_writeChar(self, rxBuffer);
-      strInput[i] = *rxBuffer;
-      i++;
+    uarte_getChar(self, rxBuffer);
+    if (*rxBuffer == '\r'){
+      strInput[i] = '\0';
+      return;
+    }
+    uarte_writeChar(self, rxBuffer);
+    strInput[i] = *rxBuffer;
+    i++;
   }
   return;
 }

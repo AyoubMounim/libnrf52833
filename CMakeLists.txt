@@ -17,7 +17,13 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        src/clock.c src/gpio.c src/uarte.c src/utils.c src/counter.c
+        src/clock.c
+        src/counter.c
+        src/gpio.c
+        src/nvmc.c
+        src/pwm.c
+        src/uarte.c
+        src/utils.c
 )
 
 include(GNUInstallDirs)
@@ -31,7 +37,14 @@ target_include_directories(${PROJECT_NAME}
 )
 
 set(HEADERS_PATH include/nrf52833)
-set(HEADERS ${HEADERS_PATH}/clock.h ${HEADERS_PATH}/gpio.h ${HEADERS_PATH}/nvmc.h ${HEADERS_PATH}/uarte.h ${HEADERS_PATH}/counter.h)
+set(HEADERS 
+    ${HEADERS_PATH}/clock.h
+    ${HEADERS_PATH}/counter.h
+    ${HEADERS_PATH}/gpio.h
+    ${HEADERS_PATH}/nvmc.h
+    ${HEADERS_PATH}/pwm.h
+    ${HEADERS_PATH}/uarte.h
+)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "-d")
