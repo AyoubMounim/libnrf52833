@@ -69,9 +69,7 @@ void pwm_setSeqCnt(Pwm const* const self, Sequence seq, uint16_t cnt);
 void pwm_setSeqRefresh(Pwm const* const self, Sequence seq, uint32_t refreshNum);
 void pwm_setSeqEndDelay(Pwm const* const self, Sequence seq, uint32_t delay);
 
-void setOutputPin(Pwm const* const self, Channel channel, Gpio* pin);
-
-
+void pwm_setOutputPin(Pwm const* const self, Channel channel, Gpio const* const pin);
 
 
 #endif

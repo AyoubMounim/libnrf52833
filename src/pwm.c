@@ -126,6 +126,11 @@ void pwm_reset(Pwm const* const self){
 
 
 void pwm_stop(Pwm const* const self){
+  uint32_t stopped1 = pPwmEvent[self->unit]->seqStarted0;
+  uint32_t stopped2 = pPwmEvent[self->unit]->seqStarted1;
+  if (!(pPwmEvent[self->unit]->seqStarted0) && !(pPwmEvent[self->unit]->seqStarted1)){
+    return;
+  }
   pPwmTask[self->unit]->stop = 1;
   while (!(pPwmEvent[self->unit]->stopped)){}
   return;
@@ -306,11 +311,13 @@ void pwm_setSeqEndDelay(Pwm const* const self, Sequence seq, uint32_t delay){
   return;
 }
 
-void setOutputPin(Pwm const* const self, Channel channel, Gpio* pin){
+void pwm_setOutputPin(Pwm const* const self, Channel channel, Gpio const* const pin){
   gpio_configDisconnect(pin);
   gpio_configOutput(pin);
   gpio_setLow(pin);
   gpio_configConnect(pin);
+  pwm_stop(self);
+  pwm_disable(self);
   switch (channel){
     case CHANNEL_0:
       pPwmPin[self->unit]->pselOut0 = (pin->port << 5) + pin->pin;
@@ -325,6 +332,7 @@ void setOutputPin(Pwm const* const self, Channel channel, Gpio* pin){
       pPwmPin[self->unit]->pselOut3 = (pin->port << 5) + pin->pin;
       break;
   }
+  pwm_enable(self);
   return;
 }
 

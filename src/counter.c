@@ -168,8 +168,8 @@ void counter_init(Counter const* const self){
 void sleep(uint32_t milliSeconds){
   uint8_t clockStartedHere = 0;
   if (!lfClockIsRunning()){
-    lfClockConfigXtal();
     lfClockInit();
+    lfClockConfigRC();
     lfClockStart();
     clockStartedHere = 1;
   }

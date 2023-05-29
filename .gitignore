@@ -1,5 +1,6 @@
 build/
 install/
 .cache/
+test/
 compile_commands.json
 *.zip
