@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME}
         src/clock.c
         src/counter.c
         src/gpio.c
+        src/i2c.c
         src/nvmc.c
         src/pwm.c
         src/uarte.c
@@ -41,6 +42,7 @@ set(HEADERS
     ${HEADERS_PATH}/clock.h
     ${HEADERS_PATH}/counter.h
     ${HEADERS_PATH}/gpio.h
+    ${HEADERS_PATH}/i2c.h
     ${HEADERS_PATH}/nvmc.h
     ${HEADERS_PATH}/pwm.h
     ${HEADERS_PATH}/uarte.h
