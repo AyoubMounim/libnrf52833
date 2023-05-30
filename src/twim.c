@@ -261,6 +261,7 @@ void twim_write(Twim const* const self, uint8_t* dataPtr, uint32_t dataLen, uint
   pTwimData[self->unit]->txdMaxCnt = dataLen;
   pTwimTask[self->unit]->startTx = 1;
   while (!(pTwimEvent[self->unit]->stopped)){}
+  twim_shortLastTxToStopDisable(self);
   twim_eventsReset(self);
   return;
 }
@@ -274,6 +275,7 @@ void twim_read(Twim const* const self, uint8_t* bufferPtr, uint32_t bufferLen, u
   pTwimData[self->unit]->rxdMaxCnt = bufferLen;
   pTwimTask[self->unit]->startRx = 1;
   while (!(pTwimEvent[self->unit]->stopped)){}
+  twim_shortLastRxToStopDisable(self);
   twim_eventsReset(self);
   return;
 }
@@ -297,6 +299,7 @@ void twim_writeAndRead(
   pTwimData[self->unit]->rxdMaxCnt = (uint32_t) bufferLen;
   pTwimTask[self->unit]->startTx = 1;
   while (!(pTwimEvent[self->unit]->stopped)){}
+  twim_shortLastTxToStartRxDisable(self);
   twim_eventsReset(self);
   return;
 }
