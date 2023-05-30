@@ -29,6 +29,7 @@ void uarte_init(Uarte const* const self);
 void uarte_reset(Uarte const* const self);
 void uarte_enable(Uarte const* const self);
 void uarte_disable(Uarte const* const self);
+uint8_t uarte_isEnabled(Uarte const* const self);
 
 void uarte_setTxPin(Uarte const* const self, Gpio const* const pin);
 void uarte_setRxPin(Uarte const* const self, Gpio const* const pin);

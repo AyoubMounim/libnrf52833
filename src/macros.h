@@ -14,7 +14,9 @@
 
 #define FIELD_MASK(pos, width) (~(~(0x1) << (width - 1)) << pos)
 #define SET_FIELD(reg, pos, width, val) \
-    reg = (reg & ~FIELD_MASK(pos, width)) | (val << pos)
+  reg = (reg & ~FIELD_MASK(pos, width)) | (val << pos)
+#define GET_FIELD(reg, pos, width) \
+  ((reg) & FIELD_MASK(pos, width)) >> (pos)
 
 
 #endif

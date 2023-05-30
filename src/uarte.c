@@ -403,6 +403,9 @@ void uarte_enable(Uarte const* const self){
 }
 
 void uarte_disable(Uarte const* const self){
+  if (!uarte_isEnabled(self)){
+    return;
+  }
   pUarteEvent[self->unit]->txStopped = 0;
   pUarteEvent[self->unit]->rxTo = 0;
   pUarteTask[self->unit]->stopRx = 1;
@@ -410,6 +413,24 @@ void uarte_disable(Uarte const* const self){
   while (!(pUarteEvent[self->unit]->txStopped)){}
   SET_FIELD(UARTE_ENABLE(self->unit), UARTE_ENABLE_POS, UARTE_ENABLE_WIDTH, UARTE_ENABLE_DISABLED);
   return;
+}
+
+uint8_t uarte_isEnabled(Uarte const* const self){
+  uint8_t isEnabled = 0;
+  uint8_t enableRegValue = GET_FIELD(
+    UARTE_ENABLE(self->unit),
+    UARTE_ENABLE_POS,
+    UARTE_ENABLE_WIDTH
+  );
+  switch (enableRegValue){
+    case UARTE_ENABLE_ENABLED:
+      isEnabled = 1;
+      break;
+    case UARTE_ENABLE_DISABLED:
+      isEnabled = 0;
+      break;
+  }
+  return isEnabled;
 }
 
 void uarte_init(Uarte const* const self){
