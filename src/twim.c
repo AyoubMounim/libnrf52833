@@ -222,6 +222,7 @@ void twim_setSclPin(Twim const* const self, Gpio const* const pin){
   twim_disable(self);
   gpio_configDisconnect(pin);
   gpio_configInput(pin);
+  gpio_setDriveS0D1(pin);
   gpio_configConnect(pin);
   pTwimPin[self->unit]->pselScl = ((pin->port) << 5) + pin->pin;
   twim_enable(self);
@@ -233,6 +234,7 @@ void twim_setSdaPin(Twim const* const self, Gpio const* const pin){
   twim_disable(self);
   gpio_configDisconnect(pin);
   gpio_configInput(pin);
+  gpio_setDriveS0D1(pin);
   gpio_configConnect(pin);
   pTwimPin[self->unit]->pselSda = ((pin->port) << 5) + pin->pin;
   twim_enable(self);
