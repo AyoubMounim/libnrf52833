@@ -32,7 +32,7 @@ enum Pull {
   PULL_WIDTH = 2
 };
 
-enum Drive {
+enum {
   DRIVE_S0S1 = 0,
   DRIVE_H0S1 = 1,
   DRIVE_S0H1 = 2,
@@ -92,6 +92,16 @@ void gpio_configOutput(Gpio const* const self){
 
 void gpio_configInput(Gpio const* const self){
   SET_FIELD(GPIO_CNF(self->port, self->pin), DIR_POS, DIR_WIDTH, DIR_INPUT);
+  return;
+}
+
+void gpio_setDriveS0D1(Gpio const* const self){
+  SET_FIELD(
+    GPIO_CNF(self->port, self->pin),
+    DRIVE_POS,
+    DRIVE_WIDTH,
+    DRIVE_S0D1
+  );
   return;
 }
 

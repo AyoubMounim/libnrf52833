@@ -10,6 +10,7 @@ typedef struct {
   uint8_t const pin;
 } Gpio;
 
+
 /* constructors */
 Gpio gpio_create(uint8_t const port, uint8_t const pin);
 
@@ -18,6 +19,7 @@ void gpio_configConnect(Gpio const* const self);
 void gpio_configDisconnect(Gpio const* const self);
 void gpio_configOutput(Gpio const* const self);
 void gpio_configInput(Gpio const* const self);
+void gpio_setDriveS0D1(Gpio const* const self);
 
 /* pin action functions */
 void gpio_setHigh(Gpio const* const self);
