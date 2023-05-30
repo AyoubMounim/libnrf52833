@@ -11,7 +11,7 @@
 #define TWIM_ERRORSRC(unit) REG(uint32_t, TWIM_BASE(unit), 0x4C4)
 #define TWIM_ENABLE(unit) REG(uint32_t, TWIM_BASE(unit), 0x500)
 #define TWIM_FREQUENCY(unit) REG(uint32_t, TWIM_BASE(unit), 0x524)
-#define TWIM_ADDRESS(unit) REG(uint32_t, TWIM_BASE(unit), 0x524)
+#define TWIM_ADDRESS(unit) REG(uint32_t, TWIM_BASE(unit), 0x588)
 
 #define ENABLED 0x6
 #define DISABLED 0x0
