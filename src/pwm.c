@@ -111,6 +111,8 @@ PwmPin volatile* pPwmPin[] = {
 
 
 void pwm_init(Pwm const* const self);
+void pwm_eventsReset(Pwm const* const self);
+
 
 Pwm pwm_create(uint8_t const unit){
   Pwm pwm = {.unit=unit};
@@ -126,13 +128,12 @@ void pwm_reset(Pwm const* const self){
 
 
 void pwm_stop(Pwm const* const self){
-  uint32_t stopped1 = pPwmEvent[self->unit]->seqStarted0;
-  uint32_t stopped2 = pPwmEvent[self->unit]->seqStarted1;
   if (!(pPwmEvent[self->unit]->seqStarted0) && !(pPwmEvent[self->unit]->seqStarted1)){
     return;
   }
   pPwmTask[self->unit]->stop = 1;
   while (!(pPwmEvent[self->unit]->stopped)){}
+  pwm_eventsReset(self);
   return;
 }
 
@@ -149,6 +150,21 @@ void pwm_start(Pwm const* const self, Sequence seq){
 void pwm_nextStep(Pwm const* const self){
   pPwmTask[self->unit]->nextStep = 1;
   return;
+}
+
+
+uint8_t pwm_isRunning(const Pwm *const self){
+  uint8_t isRunning;
+  if (!(pPwmEvent[self->unit]->seqStarted0) && !(pPwmEvent[self->unit]->seqStarted0)){
+    isRunning = 0;
+  }
+  else if (!(pPwmEvent[self->unit]->loopsDone)){
+    isRunning = 1;
+  }
+  else {
+    isRunning = 0;
+  }
+  return isRunning;
 }
 
 

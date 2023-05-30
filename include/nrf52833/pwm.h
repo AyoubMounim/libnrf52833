@@ -42,6 +42,8 @@ void pwm_stop(Pwm const* const self);
 void pwm_start(Pwm const* const self, Sequence seq);
 void pwm_nextStep(Pwm const* const self);
 
+uint8_t pwm_isRunning(Pwm const* const self);
+
 void pwm_seqEndtoStopShortEnable(Pwm const* const self, Sequence seq);
 void pwm_seqEndtoStopShortDisable(Pwm const* const self, Sequence seq);
 void pwm_loopsDoneToSeqStartEnable(Pwm const* const self, Sequence seq);
