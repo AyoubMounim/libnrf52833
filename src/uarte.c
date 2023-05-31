@@ -305,6 +305,37 @@ void uarte_writeInt(Uarte const* const self, int32_t integer){
   return;
 }
 
+void uarte_getChar(Uarte const* const self, char* chInput){
+  uarte_eventsReset(self);
+  pUarteData[self->unit]->rxdMaxCnt = 1;
+  pUarteData[self->unit]->rxdPtr = (uint32_t) chInput;
+  pUarteTask[self->unit]->startRx = 1;
+  while (!(pUarteEvent[self->unit]->endRx)){}
+  return;
+}
+
+void uarte_input(Uarte const* const self, char* strInput){
+  char rxBuffer[1];
+  uint8_t i = 0;
+  while (i < self->maxIputLen){
+      uarte_getChar(self, rxBuffer);
+      if (*rxBuffer == '\r'){
+          strInput[i] = '\0';
+          return;
+      }
+      uarte_writeChar(self, rxBuffer);
+      strInput[i] = *rxBuffer;
+      i++;
+  }
+  return;
+}
+
+void uarte_flush(Uarte const* const self){
+  pUarteTask[self->unit]->flushRx = 1;
+  return;
+}
+
+
 void uarte_eventsReset(Uarte const* const self){
   pUarteEvent[self->unit]->cts = 0;
   pUarteEvent[self->unit]->ncts = 0;

@@ -71,3 +71,4 @@ export(EXPORT "${PROJECT_NAME}Targets"
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
     NAMESPACE ${namespace}::
 )
+
