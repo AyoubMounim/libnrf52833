@@ -2,7 +2,7 @@
 # HAL For nRF52833 SoC
 
 This project is a c-language static library intended to be used as a
-HAL (Hardware Abstraction Layer) for the [nRF52833](https://infocenter.nordicsemi.com/pdf/nRF52833_OPS_v0.7.pdf)
+HAL (Hardware Abstraction Layer) for the [nRF52833][1]
 Sistem on Chip.
 
 ## Components
@@ -25,3 +25,5 @@ cmake --install . --prefix <custom-destination-path>
 The default destination path relative to the build directory is `../install`.
 In alternative you can also download the release install package.
 
+
+[1]: https://infocenter.nordicsemi.com/pdf/nRF52833_OPS_v0.7.pdf
