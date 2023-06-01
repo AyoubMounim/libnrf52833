@@ -6,7 +6,7 @@ HAL (Hardware Abstraction Layer) for the nRF52833 Sistem on Chip.
 
 ## Components
 
-Each public header of the library exposes functionalities to control differnt
+Each public header of the library exposes functionalities to control different
 memory mapped peripherals available to the SoC.
 
 ## Build
