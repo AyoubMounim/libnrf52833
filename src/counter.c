@@ -92,6 +92,24 @@ void counter_reset(Counter const* const self){
 }
 
 
+void counter_start(Counter const* const self){
+  pCounterTask[self->unit]->start = 1;
+  return;
+}
+
+void counter_stop(Counter const* const self){
+  pCounterTask[self->unit]->stop = 1;
+  return;
+}
+
+void counter_count(Counter const* const self, uint32_t countTo){
+  counter_reset(self);
+  pCounterCompareValue[self->unit]->compare0 = countTo;
+  while ((!pCounterCompareEvent[self->unit]->compare0)){}
+  return;
+}
+
+
 uint32_t computePrescaler(uint32_t periodMicroSec){
     uint32_t prescaler = (32768*periodMicroSec)/MICRO_FACTOR - 1;
     return prescaler;
