@@ -4,9 +4,6 @@
 #include <stdint.h>
 
 
-#define nop() asm volatile ("nop")
-
-
 #define CLOCK_BASE 0x40000000
 
 #define CLOCK_LFCLKSRC       REG(uint32_t, CLOCK_BASE, 0x518)
@@ -90,7 +87,6 @@ ClockStatus* pClockStatus = (ClockStatus*) (CLOCK_BASE + 0x40C);
 
 void hfClockInit(void){
   hfClockStop();
-  pClockEvent->hfClkStarted = 0;
   return;
 }
 
@@ -101,8 +97,9 @@ void hfClockStart(void){
 }
 
 void hfClockStop(void){
-    pClockTask->hfClkStop = 1;
-    return;
+  pClockTask->hfClkStop = 1;
+  pClockEvent->hfClkStarted = 0;
+  return;
 }
 
 void hfClockSetDebounce(uint8_t debounce){
@@ -112,7 +109,6 @@ void hfClockSetDebounce(uint8_t debounce){
 
 void lfClockInit(void){
   lfClockStop();
-  pClockEvent->lfClkStarted = 0;
   return;
 }
 
@@ -145,6 +141,7 @@ void lfClockStart(void){
 
 void lfClockStop(void){
   pClockTask->lfClkStop = 1;
+  pClockEvent->lfClkStarted = 0;
   return;
 }
 
@@ -159,18 +156,17 @@ void lfClockSetDebounceExtended(void){
 }
 
 
-void setCTIV(uint8_t calibrationInterval){
-    CLOCK_CTIV = (uint32_t) calibrationInterval;
-    return;
+uint8_t hfClockIsRunning(void){
+  return (uint8_t) pClockEvent->hfClkStarted;
+}
+
+uint8_t lfClockIsRunning(void){
+  return (uint8_t) pClockEvent->lfClkStarted;
 }
 
 
-void sleep(uint32_t usec){
-    uint32_t t = usec << 20;
-    while (t > 0){
-        nop();
-        t--;
-    }
+void setCTIV(uint8_t calibrationInterval){
+    CLOCK_CTIV = (uint32_t) calibrationInterval;
     return;
 }
 

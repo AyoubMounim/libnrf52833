@@ -1,5 +1,7 @@
 
 #include "utils.h"
+#include "nrf52833/clock.h"
+#include "nrf52833/counter.h"
 
 
 uint32_t strLength(const char* str){
@@ -34,3 +36,21 @@ uint8_t numberOfDigits(uint32_t integer, uint8_t base){
   } while (integer > 0);
   return nDigits;
 }
+
+
+void sleep(uint32_t milliSeconds){
+  uint8_t clockStartedHere = 0;
+  if (!lfClockIsRunning()){
+    lfClockConfigXtal();
+    lfClockInit();
+    lfClockStart();
+    clockStartedHere = 1;
+  }
+  Counter counter = counter_create(0, 1000);
+  counter_count(&counter, milliSeconds);
+  if (clockStartedHere){
+    lfClockStop();
+  }
+  return;
+}
+

@@ -19,8 +19,10 @@ void lfClockStop(void);
 void lfClockSetDebounceNormal(void);
 void lfClockSetDebounceExtended(void);
 
+uint8_t hfClockIsRunning(void);
+uint8_t lfClockIsRunning(void);
+
 void setCTIV(uint8_t calibrationInterval);
-void sleep(uint32_t usec);
 
 
 #endif
