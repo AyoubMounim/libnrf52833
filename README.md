@@ -2,7 +2,8 @@
 # HAL For nRF52833 SoC
 
 This project is a c-language static library intended to be used as a
-HAL (Hardware Abstraction Layer) for the nRF52833 Sistem on Chip.
+HAL (Hardware Abstraction Layer) for the [nRF52833](https://infocenter.nordicsemi.com/pdf/nRF52833_OPS_v0.7.pdf)
+Sistem on Chip.
 
 ## Components
 
