@@ -1,5 +1,6 @@
 
 #include "nrf52833/counter.h"
+#include "nrf52833/clock.h"
 #include "macros.h"
 #include <stdint.h>
 
@@ -159,5 +160,21 @@ void counter_init(Counter const* const self){
     counter_interruptReset(self);
     counter_eventRoutingReset(self);
     return;
+}
+
+void sleep(uint32_t milliSeconds){
+  uint8_t clockStartedHere = 0;
+  if (!lfClockIsRunning()){
+    lfClockConfigXtal();
+    lfClockInit();
+    lfClockStart();
+    clockStartedHere = 1;
+  }
+  Counter counter = counter_create(0, 1000);
+  counter_count(&counter, milliSeconds);
+  if (clockStartedHere){
+    lfClockStop();
+  }
+  return;
 }
 

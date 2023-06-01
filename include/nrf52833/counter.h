@@ -17,5 +17,6 @@ void counter_start(Counter const* const self);
 void counter_stop(Counter const* const self);
 void counter_count(Counter const* const self, uint32_t countTo);
 
+void sleep(uint32_t milliSeconds);
 
 #endif
