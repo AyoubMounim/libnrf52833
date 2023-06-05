@@ -66,7 +66,7 @@ void pwm_setCounterTop(Pwm const* const self, uint32_t counterTop);
 void pwm_setPrescaler(Pwm const* const self, Prescaler prescaler);
 void pwm_setLoopsNumber(Pwm const* const self, uint16_t loopsNumber);
 
-void pwm_setSeqPtr(Pwm const* const self, Sequence seq, uint32_t ptr);
+void pwm_setSeqPtr(Pwm const* const self, Sequence seq, uint16_t* ptr);
 void pwm_setSeqCnt(Pwm const* const self, Sequence seq, uint16_t cnt);
 void pwm_setSeqRefresh(Pwm const* const self, Sequence seq, uint32_t refreshNum);
 void pwm_setSeqEndDelay(Pwm const* const self, Sequence seq, uint32_t delay);

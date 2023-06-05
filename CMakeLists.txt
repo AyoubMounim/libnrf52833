@@ -9,7 +9,7 @@ project("nrf52833" VERSION 1.0 LANGUAGES C)
 set(namespace nrf52833)
 
 set(CMAKE_C_COMPILER "arm-none-eabi-gcc")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nostartfiles -nostdlib -g -Wall -mcpu=cortex-m4 -mthumb -ffreestanding")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nostartfiles -nostdlib -g -Wall -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -ffreestanding")
 
 add_library(${PROJECT_NAME} STATIC)
 

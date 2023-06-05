@@ -15,6 +15,9 @@
 #define UARTE_CONFIG(unit) REG(uint32_t, UARTE_BASE(unit), 0x56C)
 
 
+#define ASCII_ZERO 48
+
+
 enum {
   UARTE_SHORTS_ENDRX_STARTRX_POS = 5,
   UARTE_SHORTS_ENDRX_STOPRX_POS = 6
@@ -135,6 +138,7 @@ void uarte_disable(Uarte const* const self);
 void uarte_includeParity(Uarte const* const self);
 void uarte_excludeParity(Uarte const* const self);
 void uarte_eventsReset(Uarte const* const self);
+static uint32_t uarte_getIntFromDigitsArray(char* digits, uint8_t len);
 
 
 Uarte uarte_create(uint8_t const unit, uint8_t const maxInputLen){
@@ -317,7 +321,7 @@ void uarte_getChar(Uarte const* const self, char* chInput){
   return;
 }
 
-void uarte_input(Uarte const* const self, char* strInput){
+void uarte_inputStr(Uarte const* const self, char* strInput){
   char rxBuffer[1] = {'e'};
   uint8_t i = 0;
   while (i < self->maxIputLen){
@@ -331,6 +335,31 @@ void uarte_input(Uarte const* const self, char* strInput){
     i++;
   }
   return;
+}
+
+uint32_t uarte_inputInt(Uarte const* const self){
+  char intInput[self->maxIputLen];
+  char rxBuffer[1] = {'e'};
+  char rxBufferToInt;
+  uint8_t i = 0;
+  while (i < self->maxIputLen){
+    uarte_getChar(self, rxBuffer);
+    if (*rxBuffer == '\r'){
+      intInput[i] = '\0';
+      uint32_t integer = uarte_getIntFromDigitsArray(intInput, i);
+      return integer;
+    }
+    if (*rxBuffer < 48 || *rxBuffer > 57){
+      rxBufferToInt = *rxBuffer;
+    }
+    else {
+      rxBufferToInt = *rxBuffer - ASCII_ZERO;
+    }
+    uarte_writeChar(self, rxBuffer);
+    intInput[i] = rxBufferToInt;
+    i++;
+  }
+  return 0;
 }
 
 void uarte_flush(Uarte const* const self){
@@ -441,3 +470,18 @@ void uarte_init(Uarte const* const self){
   uarte_enable(self);
   return;
 }
+
+
+uint32_t uarte_getIntFromDigitsArray(char* digits, uint8_t len){
+  uint32_t power = 1;
+  uint32_t integer = 0;
+  for (uint8_t i = 0; i < len; i++){
+    power = 1;
+    for (uint8_t j = len-i-1; j > 0; j--){
+      power *= 10;
+    }
+    integer += digits[i]*power;
+  }
+  return integer;
+}
+

@@ -308,8 +308,8 @@ void pwm_setLoopsNumber(Pwm const* const self, uint16_t loopsNumber){
   return;
 }
 
-void pwm_setSeqPtr(Pwm const* const self, Sequence seq, uint32_t ptr){
-  pPwmSeqConfig[self->unit][seq]->seqPtr = ptr;
+void pwm_setSeqPtr(Pwm const* const self, Sequence seq, uint16_t* ptr){
+  pPwmSeqConfig[self->unit][seq]->seqPtr = (uint32_t) ptr;
   return;
 }
 

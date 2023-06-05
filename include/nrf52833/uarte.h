@@ -53,7 +53,8 @@ void uarte_writeChar(Uarte const* const self, char const* const ch);
 void uarte_writeStr(Uarte const* const self, char const* const str);
 void uarte_writeInt(Uarte const* const self, int32_t integer);
 void uarte_getChar(Uarte const* const self, char* ch_input);
-void uarte_input(Uarte const* const self, char* str_input);
+void uarte_inputStr(Uarte const* const self, char* strInput);
+uint32_t uarte_inputInt(Uarte const* const self);
 void uarte_flush(Uarte const* const self);
 
 
