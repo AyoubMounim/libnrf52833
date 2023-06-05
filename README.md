@@ -2,13 +2,13 @@
 # HAL For nRF52833 SoC
 
 This project is a c-language static library intended to be used as a
-HAL (Hardware Abstraction Layer) for the [nRF52833][1]
-Sistem on Chip.
+collection if drivers for the [nRF52833][1]
+SoC's memory mapped peripherals.
 
 ## Components
 
-Each public header of the library exposes functionalities to control different
-memory mapped peripherals available to the SoC.
+Each public header of the library exposes functionalities to control the different
+peripheral devices available to the SoC.
 
 ## Build
 
