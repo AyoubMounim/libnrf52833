@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME}
         src/gpio.c
         src/nvmc.c
         src/pwm.c
+        src/radio.c
         src/uarte.c
         src/twim.c
         src/utils.c
@@ -44,6 +45,7 @@ set(HEADERS
     ${HEADERS_PATH}/gpio.h
     ${HEADERS_PATH}/nvmc.h
     ${HEADERS_PATH}/pwm.h
+    ${HEADERS_PATH}/radio.h
     ${HEADERS_PATH}/twim.h
     ${HEADERS_PATH}/uarte.h
 )
