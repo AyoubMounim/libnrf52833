@@ -3,5 +3,7 @@
 #define RADIO_H
 
 
+void radioInit(void);
+void radioReset(void);
 
 #endif
