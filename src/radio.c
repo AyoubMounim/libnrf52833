@@ -56,6 +56,8 @@
 
 #define RADIO_PSELDFEGPIO(n) REG(uint32_t, RADIO_BASE, 0x930 + (n))
 
+#define ED_RSSISCALE 4
+
 
 enum {
   RADIO_SHORTS_READY_START_POS = 0,
@@ -115,8 +117,15 @@ enum {
 enum {
   RADIO_CRCCNF_LEN_WIDTH = 2,
   RADIO_CRCCNF_LEN_POS = 0,
+  RADIO_CRCCNF_LEN_DISABLED = 0,
+  RADIO_CRCCNF_LEN_ONE = 1,
+  RADIO_CRCCNF_LEN_TWO = 2,
+  RADIO_CRCCNF_LEN_THREE = 3,
   RADIO_CRCCNF_SKIPADDR_WIDTH = 2,
   RADIO_CRCCNF_SKIPADDR_POS = 8,
+  RADIO_CRCCNF_SKIPADDR_INCLUDE = 0,
+  RADIO_CRCCNF_SKIPADDR_SKIP = 1,
+  RADIO_CRCCNF_SKIPADDR_IEEE = 2,
 };
 
 enum {
@@ -142,6 +151,16 @@ enum {
   RADIO_CCACTRL_CCACORRTHRES_POS = 16,
   RADIO_CCACTRL_CCACORRCNT_WIDTH = 8,
   RADIO_CCACTRL_CCACORRCNT_POS = 24,
+};
+
+enum {
+  RADIO_MODE_NRF1MBIT = 0,
+  RADIO_MODE_NRF2MBIT = 1,
+  RADIO_MODE_BLE1MBIT = 3,
+  RADIO_MODE_BLE2MBIT = 4,
+  RADIO_MODE_BLELR125KBIT = 5,
+  RADIO_MODE_BLELR500KBIT = 6,
+  RADIO_MODE_IEEE250KBIT = 15,
 };
 
 
@@ -216,15 +235,24 @@ typedef struct __attribute__((packed)){
 
 
 RadioTask volatile* const pRadioTask = (RadioTask*) RADIO_BASE;
-RadioEvent volatile* const pRadioEvent = (RadioEvent*) RADIO_BASE + 0x100;
-RadioInterrupt volatile* const pRadioInterrupt = (RadioInterrupt*) RADIO_BASE + 0x304;
-RadioDeviceAddress volatile* const pRadioDeviceAddress = (RadioDeviceAddress*) RADIO_BASE + 0x600;
+RadioEvent volatile* const pRadioEvent = (RadioEvent*) (RADIO_BASE + 0x100);
+RadioInterrupt volatile* const pRadioInterrupt = (RadioInterrupt*) (RADIO_BASE + 0x304);
+RadioDeviceAddress volatile* const pRadioDeviceAddress = (RadioDeviceAddress*) (RADIO_BASE + 0x600);
+
+
+typedef struct __attribute__((packed)){
+  char preambleSequence[4];
+  char sfd;
+  char length;
+  char payload[127];
+} IeeePacket;
 
 
 void radioResetEvents(void);
 void radioDisable(void);
 void radioShortsReset(void);
 void radioDeviceAddressReset(void);
+RadioState radioGetState(void);
 
 
 void radioInit(void){
@@ -242,6 +270,130 @@ void radioReset(void){
   radioInit();
   return;
 }
+
+
+void radioSetModeIee(void){
+  radioSetCRCIeee();
+  RADIO_MODE = RADIO_MODE_IEEE250KBIT;
+  return;
+}
+
+
+void radioReceive(uint8_t* rxBuffer){
+  radioResetEvents();
+  radioShortsReset();
+  radioSetMaxLen(127);
+  radioSetStatLen(1);
+  RADIO_PACKETPTR = (uint32_t) rxBuffer;
+  radioSetRxState();
+  pRadioTask->start = 1;
+  while (!(pRadioEvent->end)){}
+  radioDisable();
+  return;
+}
+
+uint8_t radioEd(uint32_t edCnt){
+  uint8_t val;
+  radioShortsReset();
+  radioResetEvents();
+  RADIO_EDCNT = edCnt;
+  radioSetRxState();
+  pRadioTask->edStart = 1;
+  while (!(pRadioEvent->edEnd)){}
+  val = (uint8_t) RADIO_EDSAMPLE;
+  val = val > 63 ? 255 : val*ED_RSSISCALE;
+  return val;
+}
+
+
+void radioShortEndToDisableEnable(void){
+  SET_BIT(RADIO_SHORTS, RADIO_SHORTS_END_DISABLE_POS);
+  return;
+}
+
+void radioShortEndToDisableDisable(void){
+  CLR_BIT(RADIO_SHORTS, RADIO_SHORTS_END_DISABLE_POS);
+  return;
+}
+
+void radioShortReadyToStartEnable(void){
+  SET_BIT(RADIO_SHORTS, RADIO_SHORTS_READY_START_POS);
+  return;
+}
+
+void radioShortReadyToStartDisable(void){
+  CLR_BIT(RADIO_SHORTS, RADIO_SHORTS_READY_START_POS);
+}
+
+
+void radioSetMaxLen(uint8_t maxLen){
+  SET_FIELD(
+    RADIO_PCNF1,
+    RADIO_PCNF1_MAXLEN_POS,
+    RADIO_PCNF1_MAXLEN_WIDTH,
+    maxLen
+  );
+  return;
+}
+
+void radioSetStatLen(uint8_t statLen){
+  SET_FIELD(
+    RADIO_PCNF1,
+    RADIO_PCNF1_STATLEN_POS,
+    RADIO_PCNF1_STATLEN_WIDTH,
+    statLen
+  );
+}
+
+void radioSetFrequency(uint16_t freqMhz){
+  if (freqMhz < 2400){
+    SET_BIT(RADIO_FREQUENCY, RADIO_FREQUENCY_MAP_POS);
+    SET_FIELD(
+      RADIO_FREQUENCY,
+      RADIO_FREQUENCY_FREQ_POS,
+      RADIO_FREQUENCY_FREQ_WIDTH,
+      (freqMhz - 2360)
+    );
+  }
+  else {
+    CLR_BIT(RADIO_FREQUENCY, RADIO_FREQUENCY_MAP_POS);
+    SET_FIELD(
+      RADIO_FREQUENCY,
+      RADIO_FREQUENCY_FREQ_POS,
+      RADIO_FREQUENCY_FREQ_WIDTH,
+      (freqMhz - 2400)
+    );
+  }
+  return;
+}
+
+void radioSetRxState(void){
+  RadioState state = radioGetState();
+  if (state == RADIO_RX){
+    return;
+  }
+  radioDisable();
+  pRadioTask->rxEn = 1;
+  while (!(pRadioEvent->ready)){}
+  return;
+}
+
+void radioSetCRCIeee(void){
+  SET_FIELD(
+    RADIO_CRCCNF,
+    RADIO_CRCCNF_SKIPADDR_POS,
+    RADIO_CRCCNF_SKIPADDR_WIDTH,
+    RADIO_CRCCNF_SKIPADDR_IEEE
+  );
+  SET_FIELD(
+    RADIO_CRCCNF,
+    RADIO_CRCCNF_LEN_POS,
+    RADIO_CRCCNF_LEN_WIDTH,
+    RADIO_CRCCNF_LEN_TWO
+  );
+  RADIO_CRCPOLY = 0x11021;
+  RADIO_CRCINIT = 0;
+};
 
 
 RadioState radioGetState(void){
