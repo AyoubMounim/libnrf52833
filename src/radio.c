@@ -163,6 +163,25 @@ enum {
   RADIO_MODE_IEEE250KBIT = 15,
 };
 
+enum {
+  RADIO_PREFIX0_AP0_POS = 0,
+  RADIO_PREFIX0_AP0_WIDTH = 8,
+  RADIO_PREFIX0_AP1_POS = 8,
+  RADIO_PREFIX0_AP1_WIDTH = 8,
+  RADIO_PREFIX0_AP2_POS = 16,
+  RADIO_PREFIX0_AP2_WIDTH = 8,
+  RADIO_PREFIX0_AP3_POS = 24,
+  RADIO_PREFIX0_AP3_WIDTH = 8,
+  RADIO_PREFIX1_AP0_POS = 0,
+  RADIO_PREFIX1_AP0_WIDTH = 8,
+  RADIO_PREFIX1_AP1_POS = 8,
+  RADIO_PREFIX1_AP1_WIDTH = 8,
+  RADIO_PREFIX1_AP2_POS = 16,
+  RADIO_PREFIX1_AP2_WIDTH = 8,
+  RADIO_PREFIX1_AP3_POS = 24,
+  RADIO_PREFIX1_AP3_WIDTH = 8,
+};
+
 
 typedef enum {
   RADIO_DISABLED = 0,
@@ -245,7 +264,7 @@ typedef struct __attribute__((packed)){
   char sfd;
   char length;
   char payload[127];
-} IeeePacket;
+} RadioPacket;
 
 
 void radioResetEvents(void);
@@ -272,12 +291,68 @@ void radioReset(void){
 }
 
 
-void radioSetModeIee(void){
+void radioSetModeIEEE(void){
   radioSetCRCIeee();
   RADIO_MODE = RADIO_MODE_IEEE250KBIT;
   return;
 }
 
+void radioSetModeBLE1Mbps(void){
+  RADIO_MODE = RADIO_MODE_BLE1MBIT;
+  SET_FIELD(
+    RADIO_PCNF0,
+    RADIO_PCNF0_PLEN_POS,
+    RADIO_PCNF0_PLEN_WIDTH,
+    1
+  );
+  SET_FIELD(
+    RADIO_PCNF0,
+    RADIO_PCNF0_LFLEN_POS,
+    RADIO_PCNF0_LFLEN_WIDTH,
+    0
+  );
+  CLR_BIT(RADIO_PCNF0, RADIO_PCNF0_S0LEN_POS);
+  CLR_BIT(RADIO_PCNF0, RADIO_PCNF0_S1INCL_POS);
+  SET_FIELD(
+    RADIO_PCNF0,
+    RADIO_PCNF0_S1LEN_POS,
+    RADIO_PCNF0_S1LEN_WIDTH,
+    0
+  );
+  SET_FIELD(
+    RADIO_PCNF1,
+    RADIO_PCNF1_BALEN_POS,
+    RADIO_PCNF1_BALEN_WIDTH,
+    3
+  );
+  SET_FIELD(
+    RADIO_PCNF1,
+    RADIO_PCNF1_MAXLEN_POS,
+    RADIO_PCNF1_MAXLEN_WIDTH,
+    255
+  );
+  SET_FIELD(
+    RADIO_PCNF1,
+    RADIO_PCNF1_STATLEN_POS,
+    RADIO_PCNF1_STATLEN_WIDTH,
+    0
+  );
+  SET_FIELD(
+    RADIO_CRCCNF,
+    RADIO_CRCCNF_LEN_POS,
+    RADIO_CRCCNF_LEN_WIDTH,
+    RADIO_CRCCNF_LEN_THREE
+  );
+  SET_FIELD(
+    RADIO_CRCCNF,
+    RADIO_CRCCNF_SKIPADDR_POS,
+    RADIO_CRCCNF_SKIPADDR_WIDTH,
+    RADIO_CRCCNF_SKIPADDR_SKIP
+  );
+  RADIO_CRCINIT = 0x00555555;
+  RADIO_CRCPOLY = 0x0100065B;
+  return;
+}
 
 void radioReceive(uint8_t* rxBuffer){
   radioResetEvents();
@@ -292,6 +367,35 @@ void radioReceive(uint8_t* rxBuffer){
   return;
 }
 
+uint8_t radioTransmit(uint8_t* txBuffer){
+  radioResetEvents();
+  radioShortsReset();
+  radioShortCCAidleToTxEnableEnable();
+  radioShortReadyToStartEnable();
+  RADIO_PACKETPTR = (uint32_t) txBuffer;
+  radioSetRxState();
+  pRadioTask->ccaStart = 1;
+  while (!(pRadioEvent->end)){
+    if (pRadioEvent->ccaBusy){
+      return 1;
+    }
+  }
+  radioShortsReset();
+  radioDisable();
+  return 0;
+}
+
+uint8_t radioBLE1MbpsTransmit(uint8_t* txBuffer){
+  radioResetEvents();
+  radioShortsReset();
+  RADIO_PACKETPTR = (uint32_t) txBuffer;
+  radioSetTxState();
+  pRadioTask->start = 1;
+  while (!(pRadioEvent->end)){}
+  radioDisable();
+  return 0;
+}
+
 uint8_t radioEd(uint32_t edCnt){
   uint8_t val;
   radioShortsReset();
@@ -302,6 +406,18 @@ uint8_t radioEd(uint32_t edCnt){
   while (!(pRadioEvent->edEnd)){}
   val = (uint8_t) RADIO_EDSAMPLE;
   val = val > 63 ? 255 : val*ED_RSSISCALE;
+  return val;
+}
+
+uint8_t radioRSSI(void){
+  uint8_t val;
+  radioShortsReset();
+  radioResetEvents();
+  radioSetRxState();
+  pRadioTask->start = 1;
+  while (!(pRadioEvent->rssiEnd)){}
+  val = (uint8_t) RADIO_RSSISAMPLE;
+  radioDisable();
   return val;
 }
 
@@ -324,6 +440,22 @@ void radioShortReadyToStartEnable(void){
 void radioShortReadyToStartDisable(void){
   CLR_BIT(RADIO_SHORTS, RADIO_SHORTS_READY_START_POS);
 }
+
+void radioShortReadyToCCAstartEnable(void){
+  SET_BIT(RADIO_SHORTS, RADIO_SHORTS_RXREADY_CCASTART_POS);
+};
+
+void radioShortReadyToCCAstartDisable(void){
+  CLR_BIT(RADIO_SHORTS, RADIO_SHORTS_RXREADY_CCASTART_POS);
+}
+
+void radioShortCCAidleToTxEnableEnable(void){
+  SET_BIT(RADIO_SHORTS, RADIO_SHORTS_CCAIDLE_TXEN_POS);
+};
+
+void radioShortCCAidleToTxEnableDisable(void){
+  CLR_BIT(RADIO_SHORTS, RADIO_SHORTS_CCAIDLE_TXEN_POS);
+};
 
 
 void radioSetMaxLen(uint8_t maxLen){
@@ -378,6 +510,17 @@ void radioSetRxState(void){
   return;
 }
 
+void radioSetTxState(void){
+  RadioState state = radioGetState();
+  if (state == RADIO_TX){
+    return;
+  }
+  radioDisable();
+  pRadioTask->txEn = 1;
+  while (!(pRadioEvent->ready)){}
+  return;
+}
+
 void radioSetCRCIeee(void){
   SET_FIELD(
     RADIO_CRCCNF,
@@ -395,6 +538,100 @@ void radioSetCRCIeee(void){
   RADIO_CRCINIT = 0;
 };
 
+void radioSetSFD(uint8_t sfd){
+  RADIO_SFD = (uint32_t) sfd;
+  return;
+}
+
+void radioSetTxLogicalAddr(uint8_t addr){
+  RADIO_TXADDRESS = addr;
+  return;
+}
+
+void radioSetRxLogicalAddr(uint8_t addr){
+  SET_BIT(RADIO_RXADDRESSES, addr);
+  return;
+}
+
+void radioSetAddr(uint8_t logicalAddr, uint32_t addr){
+  uint32_t base = (addr & 0xFFFFFF00) >> 8;
+  uint8_t prefix = addr & 0x000000FF;
+  switch (logicalAddr){
+    case 0:
+      RADIO_BASE0 = base;
+      SET_FIELD(
+        RADIO_PREFIX0,
+        RADIO_PREFIX0_AP0_POS,
+        RADIO_PREFIX0_AP0_WIDTH,
+        prefix
+      );
+      break;
+    case 1:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX0,
+        RADIO_PREFIX0_AP1_POS,
+        RADIO_PREFIX0_AP1_WIDTH,
+        prefix
+      );
+      break;
+    case 2:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX0,
+        RADIO_PREFIX0_AP2_POS,
+        RADIO_PREFIX0_AP2_WIDTH,
+        prefix
+      );
+      break;
+    case 3:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX0,
+        RADIO_PREFIX0_AP3_POS,
+        RADIO_PREFIX0_AP3_WIDTH,
+        prefix
+      );
+      break;
+    case 4:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX1,
+        RADIO_PREFIX1_AP0_POS,
+        RADIO_PREFIX1_AP0_WIDTH,
+        prefix
+      );
+      break;
+    case 5:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX1,
+        RADIO_PREFIX1_AP1_POS,
+        RADIO_PREFIX1_AP1_WIDTH,
+        prefix
+      );
+      break;
+    case 6:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX1,
+        RADIO_PREFIX1_AP2_POS,
+        RADIO_PREFIX1_AP2_WIDTH,
+        prefix
+      );
+      break;
+    case 7:
+      RADIO_BASE1 = base;
+      SET_FIELD(
+        RADIO_PREFIX1,
+        RADIO_PREFIX1_AP3_POS,
+        RADIO_PREFIX1_AP3_WIDTH,
+        prefix
+      );
+      break;
+  }
+  return;
+}
 
 RadioState radioGetState(void){
   RadioState state = (RadioState) RADIO_STATE;
