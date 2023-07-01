@@ -105,6 +105,15 @@ void gpio_setDriveS0D1(Gpio const* const self){
   return;
 }
 
+void gpio_setDriveH0H1(Gpio const* const self){
+  SET_FIELD(
+    GPIO_CNF(self->port, self->pin),
+    DRIVE_POS,
+    DRIVE_WIDTH,
+    DRIVE_H0H1
+  );
+  return;
+}
 
 void gpio_setHigh(Gpio const* const self){
   SET_BIT(GPIO_OUT(self->port), self->pin);
