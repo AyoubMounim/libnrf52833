@@ -17,6 +17,7 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
+        src/adc.c
         src/clock.c
         src/counter.c
         src/gpio.c
@@ -41,6 +42,7 @@ target_include_directories(${PROJECT_NAME}
 
 set(HEADERS_PATH include/nrf52833)
 set(HEADERS 
+    ${HEADERS_PATH}/adc.h
     ${HEADERS_PATH}/clock.h
     ${HEADERS_PATH}/counter.h
     ${HEADERS_PATH}/gpio.h
